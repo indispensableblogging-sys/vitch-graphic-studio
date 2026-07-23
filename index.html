@@ -15,8 +15,9 @@
 <header class="header">
     <div class="container">
         <h2 class="logo">Vitch Graphic Studio</h2>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 
-        <nav class="navbar">
+    <nav class="navbar">
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -159,6 +160,10 @@ Where Creativity Meets Technology
 </p>
 
 </footer>
-
+<script>
+function toggleMenu() {
+    document.querySelector("nav ul").classList.toggle("active");
+}
+    </script>
 </body>
 </html>
