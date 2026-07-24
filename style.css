@@ -227,3 +227,10 @@ font-weight:bold;
 .login-link a:hover{
 text-decoration:underline;
   }
+.hero-buttons{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+margin-top:30px;
+  }
