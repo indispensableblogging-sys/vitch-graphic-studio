@@ -1,10 +1,14 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Welcome to Vitch Graphic Studio!");
+const menuToggle = document.getElementById("menu-toggle");
+const navbar = document.getElementById("navbar");
 
-  const year = new Date().getFullYear();
-  const footer = document.querySelector("footer p");
+menuToggle.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+});
 
-  if (footer) {
-    footer.innerHTML = `© ${year} Vitch Graphic Studio. All Rights Reserved.`;
-  }
+const links = document.querySelectorAll("#navbar a");
+
+links.forEach(link => {
+    link.addEventListener("click", () => {
+        navbar.classList.remove("active");
+    });
 });
