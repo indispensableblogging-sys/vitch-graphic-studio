@@ -263,3 +263,37 @@ gap:15px;
 flex-wrap:wrap;
 margin-top:30px;
   }
+.portfolio-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+margin-top:40px;
+}
+
+.portfolio-item{
+background:#151515;
+border:1px solid rgba(212,175,55,.25);
+border-radius:18px;
+overflow:hidden;
+transition:.35s;
+text-align:center;
+}
+
+.portfolio-item:hover{
+transform:translateY(-8px);
+border-color:#d4af37;
+box-shadow:0 10px 30px rgba(212,175,55,.25);
+}
+
+.portfolio-item img{
+width:100%;
+height:260px;
+object-fit:cover;
+display:block;
+}
+
+.portfolio-item h3{
+padding:18px;
+color:#d4af37;
+font-size:22px;
+  }
