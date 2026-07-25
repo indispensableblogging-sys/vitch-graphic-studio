@@ -45,6 +45,7 @@ display:none;
 font-size:32px;
 cursor:pointer;
 color:#d4af37;
+margin-left:auto;
 }
 
 nav ul{
@@ -62,6 +63,34 @@ transition:.3s;
 
 nav ul li a:hover{
 color:#d4af37;
+}
+@media (max-width:768px){
+
+.menu-toggle{
+display:block;
+}
+
+nav{
+display:none;
+position:absolute;
+top:75px;
+right:20px;
+background:#111;
+border:1px solid #d4af37;
+border-radius:12px;
+padding:20px;
+width:220px;
+}
+
+nav.active{
+display:block;
+}
+
+nav ul{
+flex-direction:column;
+gap:18px;
+}
+
 }
 
 .hero{
