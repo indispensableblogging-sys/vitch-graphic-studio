@@ -94,13 +94,17 @@ gap:18px;
 }
 
 .hero{
-min-height:90vh;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:80px 20px;
-background:linear-gradient(135deg,#000,#1a1a1a);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:100px 20px;
+    background:
+    linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.85)),
+    url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=80");
+    background-size:cover;
+    background-position:center;
 }
 
 .hero h1{
