@@ -383,3 +383,31 @@ min-width:180px;
     font-size:.9rem;
     opacity:.7;
   }
+/* Mobile Navigation */
+.nav-links{
+    display:none;
+    flex-direction:column;
+    gap:20px;
+    position:absolute;
+    top:80px;
+    right:20px;
+    background:#111;
+    padding:20px;
+    border:1px solid #d4af37;
+    border-radius:12px;
+    width:220px;
+}
+
+.nav-links.active{
+    display:flex;
+}
+
+.nav-links a{
+    color:#fff;
+    text-decoration:none;
+    font-size:18px;
+}
+
+.nav-links a:hover{
+    color:#d4af37;
+    }
