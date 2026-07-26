@@ -460,3 +460,14 @@ min-width:180px;
     border-bottom:2px solid #d4af37;
     padding-bottom:4px;
 }
+/* Scroll Reveal Animation */
+.reveal{
+    opacity:0;
+    transform:translateY(50px);
+    transition:all .8s ease;
+}
+
+.reveal.active{
+    opacity:1;
+    transform:translateY(0);
+}
