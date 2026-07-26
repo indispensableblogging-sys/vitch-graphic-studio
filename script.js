@@ -1,14 +1,6 @@
-const menuToggle = document.getElementById("menu-toggle");
-const navbar = document.getElementById("navbar");
+const menuBtn = document.querySelector(".menu-toggle");
+const navLinks = document.querySelector(".nav-links");
 
-menuToggle.addEventListener("click", () => {
-    navbar.classList.toggle("active");
-});
-
-const links = document.querySelectorAll("#navbar a");
-
-links.forEach(link => {
-    link.addEventListener("click", () => {
-        navbar.classList.remove("active");
-    });
+menuBtn.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
 });
