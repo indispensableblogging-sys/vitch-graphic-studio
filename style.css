@@ -454,3 +454,9 @@ min-width:180px;
         padding:0;
     }
 }
+.nav-menu a.active{
+    color:#d4af37;
+    font-weight:700;
+    border-bottom:2px solid #d4af37;
+    padding-bottom:4px;
+}
