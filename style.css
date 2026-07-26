@@ -19,11 +19,12 @@ margin:auto;
 }
 
 .header{
-position:sticky;
-top:0;
-background:#111;
-border-bottom:1px solid #d4af37;
-z-index:1000;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(15,15,15,.95);
+    backdrop-filter: blur(15px);
+    border-bottom:1px solid rgba(212,175,55,.3);
 }
 
 .header .container{
