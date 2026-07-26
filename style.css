@@ -422,3 +422,31 @@ min-width:180px;
         margin-left:auto;
     }
 }
+@media (max-width:768px){
+
+    .nav-menu{
+        display:none;
+        position:absolute;
+        top:80px;
+        right:20px;
+        background:#111;
+        border:1px solid #d4af37;
+        border-radius:12px;
+        padding:20px;
+        width:220px;
+        z-index:999;
+    }
+
+    .nav-menu.active{
+        display:block;
+    }
+
+    .nav-menu ul{
+        display:flex;
+        flex-direction:column;
+        gap:18px;
+        list-style:none;
+        margin:0;
+        padding:0;
+    }
+}
