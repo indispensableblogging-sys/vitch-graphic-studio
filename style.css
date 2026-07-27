@@ -16,9 +16,9 @@ line-height:1.7;
 }
 
 .container{
-width:90%;
-max-width:1200px;
-margin:auto;
+    width:90%;
+    max-width:1200px;
+    margin:0 auto;
 }
 
 .header{
@@ -45,11 +45,11 @@ font-weight:bold;
 }
 
 .menu-toggle{
-display:none;
-font-size:32px;
-cursor:pointer;
-color:#d4af37;
-margin-left:auto;
+    display:none;
+    font-size:32px;
+    cursor:pointer;
+    color:#d4af37;
+    margin-left:auto;
 }
 
 nav ul{
