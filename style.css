@@ -292,9 +292,8 @@ text-align:center;
 }
 
 .portfolio-item:hover{
-transform:translateY(-8px);
-border-color:#d4af37;
-box-shadow:0 10px 30px rgba(212,175,55,.25);
+    transform:translateY(-10px);
+    box-shadow:0 15px 35px rgba(212,175,55,.35);
 }
 
 .portfolio-item img{
