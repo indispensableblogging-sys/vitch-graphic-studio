@@ -548,3 +548,10 @@ body{
 .portfolio-item img:hover{
     transform:scale(1.05);
 }
+.portfolio-item{
+    overflow:hidden;
+}
+
+.portfolio-item img{
+    display:block;
+    }
