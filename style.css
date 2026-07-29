@@ -557,3 +557,19 @@ body{
 .portfolio-item img{
     display:block;
     }
+.btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:12px 25px;
+    background:#d4af37;
+    color:#000;
+    text-decoration:none;
+    font-weight:700;
+    border-radius:30px;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#fff;
+    color:#000;
+}
