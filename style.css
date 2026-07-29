@@ -573,3 +573,21 @@ body{
     background:#fff;
     color:#000;
 }
+/* Footer */
+
+footer{
+    background:#0b0b0b;
+    padding:40px 20px;
+    text-align:center;
+    border-top:2px solid #d4af37;
+}
+
+footer h3{
+    color:#d4af37;
+    margin-bottom:10px;
+}
+
+footer p{
+    color:#ccc;
+    margin:8px 0;
+    }
