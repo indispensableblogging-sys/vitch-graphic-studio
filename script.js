@@ -48,5 +48,45 @@ currency.addEventListener("change", function () {
         prices[1].innerHTML = "GH₵260";
         prices[2].innerHTML = "GH₵620";
     }
+if (this.value === "KES") {
+    prices[0].innerHTML = "KSh 1,300";
+    prices[1].innerHTML = "KSh 3,900";
+    prices[2].innerHTML = "KSh 9,100";
+}
 
+if (this.value === "ZAR") {
+    prices[0].innerHTML = "R170";
+    prices[1].innerHTML = "R510";
+    prices[2].innerHTML = "R1,190";
+}
+
+if (this.value === "EUR") {
+    prices[0].innerHTML = "€9";
+    prices[1].innerHTML = "€27";
+    prices[2].innerHTML = "€63";
+}
+
+if (this.value === "GBP") {
+    prices[0].innerHTML = "£8";
+    prices[1].innerHTML = "£22";
+    prices[2].innerHTML = "£55";
+}
+
+if (this.value === "CAD") {
+    prices[0].innerHTML = "CA$14";
+    prices[1].innerHTML = "CA$35";
+    prices[2].innerHTML = "CA$84";
+}
+
+if (this.value === "AUD") {
+    prices[0].innerHTML = "A$15";
+    prices[1].innerHTML = "A$38";
+    prices[2].innerHTML = "A$90";
+}
+
+if (this.value === "AED") {
+    prices[0].innerHTML = "AED 37";
+    prices[1].innerHTML = "AED 92";
+    prices[2].innerHTML = "AED 220";
+            }
 });
