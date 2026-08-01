@@ -631,3 +631,82 @@ footer p{
     font-size:14px;
     margin-bottom:15px;
     }
+/* ===== PREMIUM TESTIMONIALS ===== */
+
+#testimonials{
+    padding:100px 0;
+    background:linear-gradient(135deg,#050505,#111,#1a1a1a);
+}
+
+.testimonial-card{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,215,0,0.25);
+
+    border-radius:20px;
+
+    padding:35px;
+
+    transition:0.4s ease;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.testimonial-card::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.15),
+        transparent
+    );
+
+    transition:.8s;
+}
+
+.testimonial-card:hover::before{
+    left:100%;
+}
+
+.testimonial-card:hover{
+    transform:translateY(-12px) scale(1.02);
+
+    border-color:gold;
+
+    box-shadow:
+    0 20px 45px rgba(255,215,0,.18);
+}
+
+.testimonial-card img{
+    width:90px;
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid gold;
+
+    margin-bottom:20px;
+
+    transition:.4s;
+}
+
+.testimonial-card:hover img{
+    transform:scale(1.08) rotate(2deg);
+}
