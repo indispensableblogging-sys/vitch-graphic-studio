@@ -755,3 +755,27 @@ footer p{
     min-width:350px;
     flex-shrink:0;
                      }
+/* Back To Top Button */
+#backToTop{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:55px;
+    height:55px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,#FFD700,#C9A227);
+    color:#111;
+    font-size:24px;
+    font-weight:bold;
+    cursor:pointer;
+    display:none;
+    z-index:9999;
+    box-shadow:0 0 20px rgba(255,215,0,.45);
+    transition:.35s;
+}
+
+#backToTop:hover{
+    transform:translateY(-6px) scale(1.08);
+    box-shadow:0 0 30px rgba(255,215,0,.9);
+}
