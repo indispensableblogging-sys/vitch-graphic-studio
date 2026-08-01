@@ -90,3 +90,27 @@ if (this.value === "AED") {
     prices[2].innerHTML = "AED 220";
             }
 });
+// ===== Auto Sliding Testimonials =====
+
+const slider = document.querySelector(".testimonial-slider");
+
+if (slider) {
+    let scrollAmount = 0;
+
+    setInterval(() => {
+
+        const cardWidth = slider.querySelector(".testimonial-card").offsetWidth + 25;
+
+        scrollAmount += cardWidth;
+
+        if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
+            scrollAmount = 0;
+        }
+
+        slider.scrollTo({
+            left: scrollAmount,
+            behavior: "smooth"
+        });
+
+    }, 4000);
+}
