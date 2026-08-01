@@ -710,3 +710,29 @@ footer p{
 .testimonial-card:hover img{
     transform:scale(1.08) rotate(2deg);
 }
+/* ===== Animated Gold Stars ===== */
+
+.stars{
+    color:#FFD700;
+    font-size:24px;
+    letter-spacing:4px;
+    margin-top:15px;
+    animation:starGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes starGlow{
+
+    from{
+        text-shadow:
+        0 0 5px gold,
+        0 0 10px gold;
+    }
+
+    to{
+        text-shadow:
+        0 0 15px gold,
+        0 0 30px gold,
+        0 0 45px gold;
+    }
+
+}
