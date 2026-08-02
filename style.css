@@ -779,3 +779,40 @@ footer p{
     transform:translateY(-6px) scale(1.08);
     box-shadow:0 0 30px rgba(255,215,0,.9);
 }
+/* Statistics Section */
+
+#stats{
+    padding:80px 20px;
+    background:#0d0d0d;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:25px;
+}
+
+.stat-box{
+    background:#161616;
+    border:1px solid rgba(255,215,0,.25);
+    border-radius:18px;
+    padding:35px 20px;
+    text-align:center;
+    transition:.35s;
+}
+
+.stat-box:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(255,215,0,.2);
+}
+
+.stat-box h2{
+    color:#FFD700;
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.stat-box p{
+    color:#ddd;
+    font-size:17px;
+}
