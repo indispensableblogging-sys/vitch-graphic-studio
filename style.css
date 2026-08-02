@@ -816,3 +816,59 @@ footer p{
     color:#ddd;
     font-size:17px;
 }
+/* ===== Luxury Preloader ===== */
+
+#preloader{
+    position:fixed;
+    inset:0;
+    background:#050505;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:opacity .8s ease, visibility .8s ease;
+}
+
+.loader-content{
+    text-align:center;
+}
+
+.loader-content h1{
+    color:#FFD700;
+    font-size:60px;
+    margin-bottom:10px;
+}
+
+.loader-content p{
+    color:#ffffff;
+    letter-spacing:3px;
+    margin-bottom:30px;
+}
+
+.loading-bar{
+    width:220px;
+    height:5px;
+    background:#222;
+    border-radius:50px;
+    overflow:hidden;
+}
+
+.loading-bar span{
+    display:block;
+    width:0;
+    height:100%;
+    background:#FFD700;
+    animation:loading 2s linear forwards;
+}
+
+@keyframes loading{
+
+    from{
+        width:0%;
+    }
+
+    to{
+        width:100%;
+    }
+
+}
