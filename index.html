@@ -415,6 +415,36 @@ backToTop.addEventListener("click", function () {
         behavior: "smooth"
     });
 });
-</script> 
+</script>
+    <script>
+const counters = document.querySelectorAll(".counter");
+
+const animateCounter = () => {
+  counters.forEach(counter => {
+    const target = +counter.getAttribute("data-target");
+    const current = +counter.innerText;
+
+    const increment = Math.ceil(target / 100);
+
+    if (current < target) {
+      counter.innerText = current + increment;
+      setTimeout(animateCounter, 20);
+    } else {
+      counter.innerText = target + "+";
+    }
+  });
+};
+
+const statsSection = document.querySelector("#stats");
+
+const observer = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    animateCounter();
+    observer.disconnect();
+  }
+});
+
+observer.observe(statsSection);
+</script>
 </body>
     </html>
