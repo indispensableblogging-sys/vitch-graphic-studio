@@ -205,24 +205,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     "📸 <strong>Photo Editing</strong><br><br>Luxury photo editing, retouching, cinematic effects and studio-quality enhancements.";
                     break;
 
-                case "quote":
+                
+case "quote":
     aiMessage.innerHTML = `
         <h3>💰 Get a Quote</h3>
-
         <p>Select the service you need:</p>
 
         <button class="ai-option">🎨 Logo Design</button>
-
         <button class="ai-option">🌐 Website Design</button>
-
         <button class="ai-option">📱 Mobile App</button>
-
         <button class="ai-option">📸 Photo Editing</button>
-
         <button class="ai-option">🖨️ Printing</button>
     `;
     break;
-
                 case "whatsapp":
                     window.open("https://wa.me/2348083336746","_blank");
                     break;
