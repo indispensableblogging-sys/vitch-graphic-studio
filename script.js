@@ -167,11 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (aiToggle && aiChat) {
         aiToggle.addEventListener("click", function () {
 
-            if (aiChat.style.display === "block") {
-                aiChat.style.display = "none";
-            } else {
-                aiChat.style.display = "block";
-            }
+            aiChat.classList.toggle("active");
 
         });
     }
