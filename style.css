@@ -944,3 +944,6 @@ cursor:pointer;
 box-shadow:0 0 25px rgba(212,175,55,.6);
 z-index:10000;
 }
+#ai-options{
+    display:block;
+    }
