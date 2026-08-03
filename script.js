@@ -159,13 +159,21 @@ window.addEventListener("load", () => {
     }
 
 });
-const aiToggle = document.getElementById("ai-toggle");
-const aiChat = document.getElementById("ai-chat");
+document.addEventListener("DOMContentLoaded", function () {
 
-aiToggle.addEventListener("click", () => {
-    if (aiChat.style.display === "block") {
-        aiChat.style.display = "none";
-    } else {
-        aiChat.style.display = "block";
+    const aiToggle = document.getElementById("ai-toggle");
+    const aiChat = document.getElementById("ai-chat");
+
+    if (aiToggle && aiChat) {
+        aiToggle.addEventListener("click", function () {
+
+            if (aiChat.style.display === "block") {
+                aiChat.style.display = "none";
+            } else {
+                aiChat.style.display = "block";
+            }
+
+        });
     }
+
 });
