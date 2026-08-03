@@ -871,9 +871,6 @@ footer p{
         width:100%;
     }
 
-}
-/* AI Chat */
-
 #ai-chat{
 position:fixed;
 bottom:120px;
@@ -883,9 +880,20 @@ background:#181818;
 border:2px solid #d4af37;
 border-radius:20px;
 overflow:hidden;
-display:none;
+
+opacity:0;
+visibility:hidden;
+transform:translateY(30px) scale(.95);
+
+transition:.35s ease;
+
 box-shadow:0 0 30px rgba(212,175,55,.35);
 z-index:9999;
+}
+#ai-chat.active{
+opacity:1;
+visibility:visible;
+transform:translateY(0) scale(1);
 }
 
 #ai-header{
