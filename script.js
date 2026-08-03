@@ -173,3 +173,51 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+document.addEventListener("DOMContentLoaded", function () {
+
+    const aiMessage = document.getElementById("ai-message");
+
+    document.querySelectorAll(".ai-option").forEach(function(button){
+
+        button.addEventListener("click", function(){
+
+            const reply = this.dataset.reply;
+
+            switch(reply){
+
+                case "logo":
+                    aiMessage.innerHTML =
+                    "🎨 <strong>Logo Design</strong><br><br>We create premium logos for businesses, churches, restaurants, fashion brands and startups.";
+                    break;
+
+                case "website":
+                    aiMessage.innerHTML =
+                    "🌐 <strong>Website Design</strong><br><br>We build modern, responsive websites with premium UI, fast loading speed and SEO optimization.";
+                    break;
+
+                case "app":
+                    aiMessage.innerHTML =
+                    "📱 <strong>Mobile App Development</strong><br><br>Android and iOS applications tailored for your business needs.";
+                    break;
+
+                case "photo":
+                    aiMessage.innerHTML =
+                    "📸 <strong>Photo Editing</strong><br><br>Luxury photo editing, retouching, cinematic effects and studio-quality enhancements.";
+                    break;
+
+                case "quote":
+                    aiMessage.innerHTML =
+                    "💰 <strong>Get a Quote</strong><br><br>Please send us your project details and we'll prepare a customized quotation.";
+                    break;
+
+                case "whatsapp":
+                    window.open("https://wa.me/2348083336746","_blank");
+                    break;
+
+            }
+
+        });
+
+    });
+
+});
