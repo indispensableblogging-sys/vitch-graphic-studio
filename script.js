@@ -217,6 +217,7 @@ case "quote":
         <button class="ai-option">📸 Photo Editing</button>
         <button class="ai-option">🖨️ Printing</button>
     `;
+                    document.getElementById("ai-options").style.display = "none";
     break;
                 case "whatsapp":
                     window.open("https://wa.me/2348083336746","_blank");
