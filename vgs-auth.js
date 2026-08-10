@@ -32,34 +32,22 @@ function explainAuthError(error) {
     const lower = raw.toLowerCase();
 
     if (lower.includes("failed to fetch") || lower.includes("networkerror") || lower.includes("load failed")) {
-        return "Supabase could not be reached from this browser. Your internet may be working, but the browser is unable to connect to the VGS Supabase project. We need to check the Supabase project/API connection next.";
+        return "Supabase could not be reached from this browser. Please refresh once and try again. If it continues, the browser/network is blocking the Supabase request.";
     }
 
     if (lower.includes("cors")) {
-        return "The browser blocked the Supabase request (CORS). We need to check the Supabase project URL/auth configuration.";
+        return "The browser blocked the Supabase request (CORS). Please check the Supabase project/Auth configuration.";
+    }
+
+    if (lower.includes("invalid login credentials")) {
+        return "Email or password is incorrect.";
+    }
+
+    if (lower.includes("email not confirmed")) {
+        return "Please confirm your email address before signing in.";
     }
 
     return raw;
-}
-
-async function testSupabaseConnection() {
-    try {
-        // getUser() makes a real request to Supabase Auth. If there is no
-        // logged-in user, an "Auth session missing" response still proves
-        // that the Supabase Auth server was reached successfully.
-        const { error } = await supabase.auth.getUser();
-
-        if (!error) return { ok: true };
-
-        const message = (error.message || "").toLowerCase();
-        if (message.includes("auth session missing") || message.includes("session missing")) {
-            return { ok: true };
-        }
-
-        return { ok: false, detail: explainAuthError(error) };
-    } catch (error) {
-        return { ok: false, detail: explainAuthError(error) };
-    }
 }
 
 async function currentUser() {
@@ -155,13 +143,9 @@ async function initAuthPage() {
 
     if (!loginForm && !signupForm) return;
 
-    showAuthMessage("Checking secure connection...");
-    const connection = await testSupabaseConnection();
-    if (!connection.ok) {
-        showAuthMessage(`Connection check failed: ${connection.detail}`);
-    } else {
-        showAuthMessage("Secure connection ready. You can sign in.", true);
-    }
+    // Do not block login behind a separate network preflight. The actual
+    // Supabase sign-in/sign-up request is the reliable connection test.
+    showAuthMessage("Secure portal ready. You can sign in or create an account.", true);
 
     if (loginForm) {
         loginForm.addEventListener("submit", async (event) => {
