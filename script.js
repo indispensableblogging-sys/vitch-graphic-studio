@@ -142,3 +142,9 @@ const vgsAutomationLoader = document.createElement("script");
 vgsAutomationLoader.src = "ai-automation.js?v=1";
 vgsAutomationLoader.defer = true;
 document.head.appendChild(vgsAutomationLoader);
+
+// Supabase authentication and client portal.
+const vgsAuthLoader = document.createElement("script");
+vgsAuthLoader.type = "module";
+vgsAuthLoader.src = "vgs-auth.js?v=1";
+document.head.appendChild(vgsAuthLoader);
