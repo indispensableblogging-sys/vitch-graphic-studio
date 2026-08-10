@@ -87,39 +87,25 @@ if (currency) {
     });
 }
 
-// ===== Auto Sliding Testimonials =====
 const slider = document.querySelector(".testimonial-slider");
-
 if (slider) {
     let scrollAmount = 0;
-
     setInterval(() => {
         const firstCard = slider.querySelector(".testimonial-card");
         if (!firstCard) return;
-
         const cardWidth = firstCard.offsetWidth + 25;
         scrollAmount += cardWidth;
-
-        if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
-            scrollAmount = 0;
-        }
-
-        slider.scrollTo({
-            left: scrollAmount,
-            behavior: "smooth"
-        });
+        if (scrollAmount >= slider.scrollWidth - slider.clientWidth) scrollAmount = 0;
+        slider.scrollTo({ left: scrollAmount, behavior: "smooth" });
     }, 4000);
 }
 
-// Animated Counter
 const counters = document.querySelectorAll(".counter");
-
 counters.forEach(counter => {
     const updateCounter = () => {
         const target = +counter.getAttribute("data-target");
         const current = +counter.innerText;
         const increment = Math.ceil(target / 100);
-
         if (current < target) {
             counter.innerText = current + increment;
             setTimeout(updateCounter, 20);
@@ -127,14 +113,11 @@ counters.forEach(counter => {
             counter.innerText = target + "+";
         }
     };
-
     updateCounter();
 });
 
-// Luxury Preloader
 window.addEventListener("load", () => {
     const preloader = document.getElementById("preloader");
-
     if (preloader) {
         setTimeout(() => {
             preloader.style.opacity = "0";
@@ -143,13 +126,13 @@ window.addEventListener("load", () => {
     }
 });
 
-// Load the robust VGS AI Assistant without changing the main HTML structure.
+// VGS AI Assistant — cache-busted so GitHub Pages loads the latest automation.
 const vgsAiLoader = document.createElement("script");
-vgsAiLoader.src = "ai-assistant.js?v=3";
+vgsAiLoader.src = "ai-assistant.js?v=4";
 vgsAiLoader.defer = true;
 document.head.appendChild(vgsAiLoader);
 
 const vgsAiFixLoader = document.createElement("script");
-vgsAiFixLoader.src = "ai-fix.js?v=1";
+vgsAiFixLoader.src = "ai-fix.js?v=2";
 vgsAiFixLoader.defer = true;
 document.head.appendChild(vgsAiFixLoader);
