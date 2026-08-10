@@ -1,113 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Admin Dashboard | Vitch Graphic Studio</title>
-
 <link rel="stylesheet" href="style.css">
-
+<style>
+.admin-hero{padding:48px 0 24px}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin:24px 0}.admin-stat{padding:20px;border:1px solid rgba(212,175,55,.25);border-radius:18px;background:rgba(255,255,255,.04)}.admin-stat strong{display:block;font-size:28px;color:#d4af37;margin-top:7px}.admin-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}.admin-panel{padding:24px;border:1px solid rgba(212,175,55,.22);border-radius:20px;background:rgba(255,255,255,.035);margin-bottom:20px;overflow:auto}.admin-panel h3{color:#d4af37;margin-top:0}.admin-table{width:100%;border-collapse:collapse;min-width:600px}.admin-table th,.admin-table td{text-align:left;padding:13px 10px;border-bottom:1px solid rgba(255,255,255,.08)}.admin-table th{color:#d4af37;font-size:13px}.admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-btn{border:1px solid rgba(212,175,55,.5);background:transparent;color:#fff;border-radius:8px;padding:8px 10px;cursor:pointer}.admin-btn:hover{background:rgba(212,175,55,.12)}.status{font-size:12px;padding:5px 8px;border-radius:12px;background:rgba(212,175,55,.12);color:#d4af37}.admin-empty{color:#aaa;padding:18px 0}.admin-notice{padding:14px;border-radius:12px;background:rgba(212,175,55,.08);color:#ddd;margin-bottom:18px}@media(max-width:800px){.admin-layout{grid-template-columns:1fr}}
+</style>
 </head>
-
 <body>
-
-<header class="header">
-
-<div class="container">
-
-<a href="index.html" class="logo">
-VITCH GRAPHIC STUDIO
-</a>
-
+<header class="header"><div class="container"><a href="index.html" class="logo">VITCH GRAPHIC STUDIO</a><div class="admin-actions"><button class="btn" data-vgs-logout type="button">Logout</button></div></div></header>
+<main>
+<section class="admin-hero"><div class="container">
+<h1>Admin Dashboard 🛠️</h1>
+<p>Welcome, <span data-auth-name>Administrator</span>. Manage VGS clients, bookings, projects and payments from one place.</p>
+<div id="admin-notice" class="admin-notice">Loading your VGS control center...</div>
+<div class="admin-grid">
+<div class="admin-stat"><span>Clients</span><strong id="stat-clients">0</strong></div>
+<div class="admin-stat"><span>Pending Bookings</span><strong id="stat-bookings">0</strong></div>
+<div class="admin-stat"><span>Active Projects</span><strong id="stat-projects">0</strong></div>
+<div class="admin-stat"><span>Unpaid Invoices</span><strong id="stat-invoices">0</strong></div>
 </div>
-
-</header>
-
-<section>
-
-<div class="container">
-
-<h2>Admin Dashboard</h2>
-
-<p class="center">
-Welcome, Administrator.
-Manage clients, bookings, projects and business activities from one place.
-</p>
-
-<div class="services-grid">
-
-<div class="card">
-<h3>👥 Clients</h3>
-<p>View all registered clients.</p>
+</div></section>
+<section><div class="container admin-layout">
+<div>
+<div class="admin-panel"><h3>📅 Incoming Bookings</h3><div id="bookings-table"><div class="admin-empty">Loading bookings...</div></div></div>
+<div class="admin-panel"><h3>📂 Projects</h3><div id="projects-table"><div class="admin-empty">Loading projects...</div></div></div>
 </div>
-
-<div class="card">
-<h3>📅 Bookings</h3>
-<p>See all incoming service requests.</p>
-</div>
-
-<div class="card">
-<h3>📂 Projects</h3>
-<p>Manage active and completed projects.</p>
-</div>
-<div class="card">
-<h3>💰 Payments</h3>
-<p>View client payments, invoices and pending transactions.</p>
-</div>
-
-<div class="card">
-<h3>📢 Announcements</h3>
-<p>Send updates and important messages to clients.</p>
-</div>
-
-<div class="card">
-<h3>📊 Analytics</h3>
-<p>Monitor bookings, clients and business performance.</p>
-</div>
-
-<div class="card">
-<h3>⚙️ Settings</h3>
-<p>Manage website settings and administrator preferences.</p>
-</div>
-
-<div class="card">
-<h3>🚪 Logout</h3>
-<p>Securely sign out of the admin dashboard.</p>
-
-<a href="index.html" class="btn">
-Logout
-</a>
-
-</div>
-
-</div>
-
-<p class="login-link">
-
-<a href="index.html">← Back to Home</a>
-
-</p>
-
-</div>
-
-</section>
-
-<footer>
-
-<div class="container">
-
-<p>© 2026 Vitch Graphic Studio. All Rights Reserved.</p>
-
-</div>
-
-</footer>
-
+<aside>
+<div class="admin-panel"><h3>👥 Recent Clients</h3><div id="clients-table"><div class="admin-empty">Loading clients...</div></div></div>
+<div class="admin-panel"><h3>💰 Outstanding Invoices</h3><div id="invoices-table"><div class="admin-empty">Loading invoices...</div></div></div>
+<div class="admin-panel"><h3>📢 Quick Actions</h3><div class="admin-actions"><a class="btn" href="booking.html">View Booking Page</a><a class="btn" href="index.html">View Website</a></div></div>
+</aside>
+</div></section>
+</main>
+<footer><div class="container"><p>© 2026 Vitch Graphic Studio. All Rights Reserved.</p></div></footer>
 <script src="script.js"></script>
+<script type="module">
+import { supabase } from './vgs-auth.js?v=4';
+const esc=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const money=(amount,currency='NGN')=>new Intl.NumberFormat('en-NG',{style:'currency',currency,maximumFractionDigits:0}).format(Number(amount||0));
 
+async function loadAdmin(){
+ const {data:{user}}=await supabase.auth.getUser();
+ if(!user){window.location.href='auth.html?redirect=admin.html';return;}
+ const {data:profile,error:profileError}=await supabase.from('profiles').select('full_name,role').eq('id',user.id).maybeSingle();
+ if(profileError||!profile||profile.role!=='admin'){
+   document.getElementById('admin-notice').textContent='This account is not an administrator. Admin access must be assigned securely in Supabase.';
+   await supabase.auth.signOut();
+   setTimeout(()=>window.location.href='auth.html',1200);
+   return;
+ }
+ document.querySelector('[data-auth-name]').textContent=profile.full_name||user.email||'Administrator';
+ const [clients,bookings,projects,invoices]=await Promise.all([
+   supabase.from('profiles').select('id,full_name,phone,created_at').eq('role','client').order('created_at',{ascending:false}).limit(10),
+   supabase.from('bookings').select('id,client_id,service,project_title,status,budget,currency,deadline,created_at').order('created_at',{ascending:false}).limit(20),
+   supabase.from('projects').select('id,client_id,title,service,status,progress,budget,currency,deadline,created_at').order('created_at',{ascending:false}).limit(20),
+   supabase.from('invoices').select('id,client_id,amount,currency,status,due_date,created_at').neq('status','paid').neq('status','cancelled').order('created_at',{ascending:false}).limit(20)
+ ]);
+ if(clients.error||bookings.error||projects.error||invoices.error){throw new Error(clients.error?.message||bookings.error?.message||projects.error?.message||invoices.error?.message);}
+ const c=clients.data||[],b=bookings.data||[],p=projects.data||[],i=invoices.data||[];
+ document.getElementById('stat-clients').textContent=c.length;
+ document.getElementById('stat-bookings').textContent=b.filter(x=>!['approved','completed','cancelled'].includes(x.status)).length;
+ document.getElementById('stat-projects').textContent=p.filter(x=>!['completed','cancelled'].includes(x.status)).length;
+ document.getElementById('stat-invoices').textContent=i.length;
+ document.getElementById('admin-notice').textContent='🟢 Secure admin workspace connected. Data below comes from Supabase.';
+ const names=new Map(c.map(x=>[x.id,x.full_name||'Client']));
+ document.getElementById('clients-table').innerHTML=c.length?`<table class="admin-table"><thead><tr><th>Client</th><th>Phone</th></tr></thead><tbody>${c.map(x=>`<tr><td>${esc(x.full_name||'Client')}</td><td>${esc(x.phone||'—')}</td></tr>`).join('')}</tbody></table>`:'<div class="admin-empty">No clients yet.</div>';
+ document.getElementById('bookings-table').innerHTML=b.length?`<table class="admin-table"><thead><tr><th>Client</th><th>Project</th><th>Status</th><th>Budget</th></tr></thead><tbody>${b.map(x=>`<tr><td>${esc(names.get(x.client_id)||'Client')}</td><td><strong>${esc(x.project_title)}</strong><br><small>${esc(x.service)}</small></td><td><span class="status">${esc(x.status)}</span></td><td>${x.budget?money(x.budget,x.currency):'—'}</td></tr>`).join('')}</tbody></table>`:'<div class="admin-empty">No bookings yet.</div>';
+ document.getElementById('projects-table').innerHTML=p.length?`<table class="admin-table"><thead><tr><th>Project</th><th>Client</th><th>Progress</th><th>Status</th></tr></thead><tbody>${p.map(x=>`<tr><td><strong>${esc(x.title)}</strong><br><small>${esc(x.service)}</small></td><td>${esc(names.get(x.client_id)||'Client')}</td><td>${Number(x.progress||0)}%</td><td><span class="status">${esc(x.status)}</span></td></tr>`).join('')}</tbody></table>`:'<div class="admin-empty">No projects yet.</div>';
+ document.getElementById('invoices-table').innerHTML=i.length?`<table class="admin-table"><thead><tr><th>Client</th><th>Amount</th><th>Status</th></tr></thead><tbody>${i.map(x=>`<tr><td>${esc(names.get(x.client_id)||'Client')}</td><td>${money(x.amount,x.currency)}</td><td><span class="status">${esc(x.status)}</span></td></tr>`).join('')}</tbody></table>`:'<div class="admin-empty">No outstanding invoices.</div>';
+}
+loadAdmin().catch(error=>{console.error(error);document.getElementById('admin-notice').textContent='Admin data could not be loaded yet. The database connection or admin permissions need to be checked.';});
+</script>
 </body>
-
-  </html>
+</html>
