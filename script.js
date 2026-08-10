@@ -116,35 +116,54 @@ counters.forEach(counter => {
     updateCounter();
 });
 
-window.addEventListener("load", () => {
+// VGS preloader fix: do not wait for external images/CDNs/Supabase modules.
+// GitHub Pages can otherwise keep the window "load" event waiting too long.
+const hideVgsPreloader = () => {
+    const preloader = document.getElementById("preloader");
+    if (!preloader) return;
+    setTimeout(() => {
+        preloader.style.opacity = "0";
+        preloader.style.visibility = "hidden";
+        preloader.style.pointerEvents = "none";
+    }, 900);
+};
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", hideVgsPreloader, { once: true });
+} else {
+    hideVgsPreloader();
+}
+
+// Safety fallback: never leave the user trapped on the loading screen.
+setTimeout(() => {
     const preloader = document.getElementById("preloader");
     if (preloader) {
-        setTimeout(() => {
-            preloader.style.opacity = "0";
-            preloader.style.visibility = "hidden";
-        }, 1800);
+        preloader.style.opacity = "0";
+        preloader.style.visibility = "hidden";
+        preloader.style.pointerEvents = "none";
     }
-});
+}, 5000);
 
 // VGS AI Assistant — cache-busted so GitHub Pages loads the latest automation.
 const vgsAiLoader = document.createElement("script");
-vgsAiLoader.src = "ai-assistant.js?v=5";
+vgsAiLoader.src = "ai-assistant.js?v=6";
 vgsAiLoader.defer = true;
 document.head.appendChild(vgsAiLoader);
 
 const vgsAiFixLoader = document.createElement("script");
-vgsAiFixLoader.src = "ai-fix.js?v=2";
+vgsAiFixLoader.src = "ai-fix.js?v=3";
 vgsAiFixLoader.defer = true;
 document.head.appendChild(vgsAiFixLoader);
 
 // VGS AI Automation — package recommendation and budget guidance.
 const vgsAutomationLoader = document.createElement("script");
-vgsAutomationLoader.src = "ai-automation.js?v=1";
+vgsAutomationLoader.src = "ai-automation.js?v=2";
 vgsAutomationLoader.defer = true;
 document.head.appendChild(vgsAutomationLoader);
 
 // Supabase authentication and client portal.
 const vgsAuthLoader = document.createElement("script");
 vgsAuthLoader.type = "module";
-vgsAuthLoader.src = "vgs-auth.js?v=1";
+vgsAuthLoader.src = "vgs-auth.js?v=2";
+vgsAuthLoader.defer = true;
 document.head.appendChild(vgsAuthLoader);
