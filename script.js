@@ -145,7 +145,7 @@ window.addEventListener("load", () => {
 
 // Load the robust VGS AI Assistant without changing the main HTML structure.
 const vgsAiLoader = document.createElement("script");
-vgsAiLoader.src = "ai-assistant.js?v=2";
+vgsAiLoader.src = "ai-assistant.js?v=3";
 vgsAiLoader.defer = true;
 document.head.appendChild(vgsAiLoader);
 
