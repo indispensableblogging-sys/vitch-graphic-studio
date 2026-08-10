@@ -148,3 +148,8 @@ const vgsAiLoader = document.createElement("script");
 vgsAiLoader.src = "ai-assistant.js?v=2";
 vgsAiLoader.defer = true;
 document.head.appendChild(vgsAiLoader);
+
+const vgsAiFixLoader = document.createElement("script");
+vgsAiFixLoader.src = "ai-fix.js?v=1";
+vgsAiFixLoader.defer = true;
+document.head.appendChild(vgsAiFixLoader);
