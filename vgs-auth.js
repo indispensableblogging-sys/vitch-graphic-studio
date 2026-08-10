@@ -8,11 +8,6 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true
-    },
-    global: {
-        headers: {
-            "x-client-info": "vgs-client-portal"
-        }
     }
 });
 
@@ -37,7 +32,11 @@ function explainAuthError(error) {
     const lower = raw.toLowerCase();
 
     if (lower.includes("failed to fetch") || lower.includes("networkerror") || lower.includes("load failed")) {
-        return "Unable to reach VGS server. Please check your internet connection, then refresh and try again. If your internet is working, the Supabase connection needs to be checked.";
+        return "Supabase could not be reached from this browser. Your internet may be working, but the browser is unable to connect to the VGS Supabase project. We need to check the Supabase project/API connection next.";
+    }
+
+    if (lower.includes("cors")) {
+        return "The browser blocked the Supabase request (CORS). We need to check the Supabase project URL/auth configuration.";
     }
 
     return raw;
@@ -45,20 +44,19 @@ function explainAuthError(error) {
 
 async function testSupabaseConnection() {
     try {
-        const response = await fetch(`${SUPABASE_URL}/auth/v1/settings`, {
-            method: "GET",
-            headers: {
-                apikey: SUPABASE_PUBLISHABLE_KEY,
-                Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
-            },
-            cache: "no-store"
-        });
+        // getUser() makes a real request to Supabase Auth. If there is no
+        // logged-in user, an "Auth session missing" response still proves
+        // that the Supabase Auth server was reached successfully.
+        const { error } = await supabase.auth.getUser();
 
-        if (!response.ok) {
-            return { ok: false, detail: `Supabase returned HTTP ${response.status}.` };
+        if (!error) return { ok: true };
+
+        const message = (error.message || "").toLowerCase();
+        if (message.includes("auth session missing") || message.includes("session missing")) {
+            return { ok: true };
         }
 
-        return { ok: true };
+        return { ok: false, detail: explainAuthError(error) };
     } catch (error) {
         return { ok: false, detail: explainAuthError(error) };
     }
@@ -157,14 +155,12 @@ async function initAuthPage() {
 
     if (!loginForm && !signupForm) return;
 
-    if (loginForm || signupForm) {
-        showAuthMessage("Checking secure connection...");
-        const connection = await testSupabaseConnection();
-        if (!connection.ok) {
-            showAuthMessage(`Connection check failed: ${connection.detail}`);
-        } else {
-            showAuthMessage("Secure connection ready.", true);
-        }
+    showAuthMessage("Checking secure connection...");
+    const connection = await testSupabaseConnection();
+    if (!connection.ok) {
+        showAuthMessage(`Connection check failed: ${connection.detail}`);
+    } else {
+        showAuthMessage("Secure connection ready. You can sign in.", true);
     }
 
     if (loginForm) {
@@ -175,12 +171,6 @@ async function initAuthPage() {
             showAuthMessage("Signing you in...");
 
             try {
-                const connection = await testSupabaseConnection();
-                if (!connection.ok) {
-                    showAuthMessage(`Connection problem: ${connection.detail}`);
-                    return;
-                }
-
                 const { error } = await supabase.auth.signInWithPassword({ email, password });
                 if (error) {
                     showAuthMessage(explainAuthError(error));
@@ -206,12 +196,6 @@ async function initAuthPage() {
             showAuthMessage("Creating your account...");
 
             try {
-                const connection = await testSupabaseConnection();
-                if (!connection.ok) {
-                    showAuthMessage(`Connection problem: ${connection.detail}`);
-                    return;
-                }
-
                 const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
