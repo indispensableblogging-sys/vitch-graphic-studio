@@ -128,7 +128,7 @@ window.addEventListener("load", () => {
 
 // VGS AI Assistant — cache-busted so GitHub Pages loads the latest automation.
 const vgsAiLoader = document.createElement("script");
-vgsAiLoader.src = "ai-assistant.js?v=4";
+vgsAiLoader.src = "ai-assistant.js?v=5";
 vgsAiLoader.defer = true;
 document.head.appendChild(vgsAiLoader);
 
@@ -136,3 +136,9 @@ const vgsAiFixLoader = document.createElement("script");
 vgsAiFixLoader.src = "ai-fix.js?v=2";
 vgsAiFixLoader.defer = true;
 document.head.appendChild(vgsAiFixLoader);
+
+// VGS AI Automation — package recommendation and budget guidance.
+const vgsAutomationLoader = document.createElement("script");
+vgsAutomationLoader.src = "ai-automation.js?v=1";
+vgsAutomationLoader.defer = true;
+document.head.appendChild(vgsAutomationLoader);
