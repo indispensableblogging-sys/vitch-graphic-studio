@@ -116,8 +116,6 @@ counters.forEach(counter => {
     updateCounter();
 });
 
-// VGS preloader fix: do not wait for external images/CDNs/Supabase modules.
-// GitHub Pages can otherwise keep the window "load" event waiting too long.
 const hideVgsPreloader = () => {
     const preloader = document.getElementById("preloader");
     if (!preloader) return;
@@ -134,7 +132,6 @@ if (document.readyState === "loading") {
     hideVgsPreloader();
 }
 
-// Safety fallback: never leave the user trapped on the loading screen.
 setTimeout(() => {
     const preloader = document.getElementById("preloader");
     if (preloader) {
@@ -144,7 +141,6 @@ setTimeout(() => {
     }
 }, 5000);
 
-// VGS AI Assistant — cache-busted so GitHub Pages loads the latest automation.
 const vgsAiLoader = document.createElement("script");
 vgsAiLoader.src = "ai-assistant.js?v=6";
 vgsAiLoader.defer = true;
@@ -155,15 +151,13 @@ vgsAiFixLoader.src = "ai-fix.js?v=3";
 vgsAiFixLoader.defer = true;
 document.head.appendChild(vgsAiFixLoader);
 
-// VGS AI Automation — package recommendation and budget guidance.
 const vgsAutomationLoader = document.createElement("script");
 vgsAutomationLoader.src = "ai-automation.js?v=2";
 vgsAutomationLoader.defer = true;
 document.head.appendChild(vgsAutomationLoader);
 
-// Supabase authentication and client portal.
 const vgsAuthLoader = document.createElement("script");
 vgsAuthLoader.type = "module";
-vgsAuthLoader.src = "vgs-auth.js?v=2";
+vgsAuthLoader.src = "vgs-auth.js?v=4";
 vgsAuthLoader.defer = true;
 document.head.appendChild(vgsAuthLoader);
