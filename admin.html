@@ -36,9 +36,9 @@
 </div></section>
 </main>
 <footer><div class="container"><p>© 2026 Vitch Graphic Studio. All Rights Reserved.</p></div></footer>
-<script src="script.js"></script>
+<script src="script.js?v=7"></script>
 <script type="module">
-import { supabase } from './vgs-auth.js?v=4';
+import { supabase } from './vgs-auth.js?v=7';
 const esc=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const money=(amount,currency='NGN')=>new Intl.NumberFormat('en-NG',{style:'currency',currency,maximumFractionDigits:0}).format(Number(amount||0));
 
