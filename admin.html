@@ -36,23 +36,35 @@
 </div></section>
 </main>
 <footer><div class="container"><p>© 2026 Vitch Graphic Studio. All Rights Reserved.</p></div></footer>
-<script src="script.js?v=8"></script>
+<script src="script.js?v=9"></script>
 <script type="module">
-import { supabase } from './vgs-auth.js?v=9';
+import { supabase } from './vgs-auth.js?v=10';
 const esc=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const money=(amount,currency='NGN')=>new Intl.NumberFormat('en-NG',{style:'currency',currency,maximumFractionDigits:0}).format(Number(amount||0));
 
 async function loadAdmin(){
- const {data:{user}}=await supabase.auth.getUser();
- if(!user){window.location.href='auth.html?redirect=admin.html';return;}
- const {data:isAdmin,error:adminError}=await supabase.rpc('is_vgs_admin');
- if(adminError || isAdmin !== true){
+ const {data:{user},error:userError}=await supabase.auth.getUser();
+ if(userError||!user){window.location.href='auth.html?redirect=admin.html';return;}
+
+ // Prefer the user's own profile record. The profiles RLS policy explicitly allows
+ // authenticated users to read their own profile, so this is reliable even if the
+ // admin RPC is unavailable during page startup.
+ const {data:profile,error:profileError}=await supabase.from('profiles').select('id,full_name,email,role').eq('id',user.id).maybeSingle();
+ let admin = profile?.role === 'admin';
+
+ // RPC is only a fallback/confirmation, never a reason to reject a known admin profile.
+ if(!admin){
+   const {data:rpcAdmin}=await supabase.rpc('is_vgs_admin');
+   admin = rpcAdmin === true;
+ }
+
+ if(!admin){
    document.getElementById('admin-notice').textContent='This account does not have administrator access yet.';
    await supabase.auth.signOut();
    setTimeout(()=>window.location.href='auth.html',1200);
    return;
  }
- const {data:profile}=await supabase.from('profiles').select('full_name,email,role').eq('id',user.id).maybeSingle();
+
  document.querySelector('[data-auth-name]').textContent=profile?.full_name||user.email||'Administrator';
  const [clients,bookings,projects,invoices]=await Promise.all([
    supabase.from('profiles').select('id,full_name,phone,created_at').eq('role','client').order('created_at',{ascending:false}).limit(10),
