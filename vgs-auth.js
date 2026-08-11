@@ -1,6 +1,6 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-const SUPABASE_URL = "https://unidgmiuyfzttutwyev.supabase.co";
+const SUPABASE_URL = "https://unidgmiuyfzfttutwyev.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_wrJ4jMABrxax1ThqVjG6mw_GV7KSDLK";
 const SITE_URL = "https://indispensableblogging-sys.github.io/vitch-graphic-studio";
 
