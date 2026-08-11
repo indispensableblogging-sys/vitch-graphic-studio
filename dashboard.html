@@ -1,77 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Client Dashboard | Vitch Graphic Studio</title>
-<link rel="stylesheet" href="style.css">
-<style>
-.dashboard-hero{padding:48px 0 24px}.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:24px 0}.dash-stat{padding:22px;border:1px solid rgba(212,175,55,.25);border-radius:18px;background:rgba(255,255,255,.04)}.dash-stat strong{display:block;font-size:28px;color:#d4af37;margin-top:8px}.dash-layout{display:grid;grid-template-columns:2fr 1fr;gap:20px}.dash-panel{padding:24px;border:1px solid rgba(212,175,55,.22);border-radius:20px;background:rgba(255,255,255,.035);margin-bottom:20px}.dash-panel h3{color:#d4af37;margin-top:0}.project-row,.activity-row{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08)}.project-row:last-child,.activity-row:last-child{border-bottom:0}.progress{height:8px;background:#252525;border-radius:20px;overflow:hidden;margin-top:10px}.progress span{display:block;height:100%;width:65%;background:#d4af37}.empty-state{color:#aaa;padding:20px 0}.dash-actions{display:flex;gap:10px;flex-wrap:wrap}.profile-name{color:#d4af37}@media(max-width:760px){.dash-layout{grid-template-columns:1fr}.project-row,.activity-row{align-items:flex-start;flex-direction:column}}
-</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Client Dashboard | Vitch Graphic Studio</title><link rel="stylesheet" href="style.css">
+<style>.dashboard-hero{padding:48px 0 24px}.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:24px 0}.dash-stat{padding:22px;border:1px solid rgba(212,175,55,.25);border-radius:18px;background:rgba(255,255,255,.04)}.dash-stat strong{display:block;font-size:28px;color:#d4af37;margin-top:8px}.dash-layout{display:grid;grid-template-columns:2fr 1fr;gap:20px}.dash-panel{padding:24px;border:1px solid rgba(212,175,55,.22);border-radius:20px;background:rgba(255,255,255,.035);margin-bottom:20px}.dash-panel h3{color:#d4af37;margin-top:0}.project-row,.activity-row{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08)}.project-row:last-child,.activity-row:last-child{border-bottom:0}.progress{height:8px;background:#252525;border-radius:20px;overflow:hidden;margin-top:10px}.progress span{display:block;height:100%;width:65%;background:#d4af37}.empty-state{color:#aaa;padding:20px 0}.dash-actions{display:flex;gap:10px;flex-wrap:wrap}.profile-name{color:#d4af37}@media(max-width:760px){.dash-layout{grid-template-columns:1fr}.project-row,.activity-row{align-items:flex-start;flex-direction:column}}</style>
 </head>
-<body>
-<header class="header"><div class="container"><a href="index.html" class="logo">VITCH GRAPHIC STUDIO</a><div class="dash-actions"><button class="btn" data-vgs-logout type="button">Logout</button></div></div></header>
-<main>
-<section class="dashboard-hero"><div class="container">
-<h1>Welcome back, <span class="profile-name" data-auth-name>Client</span> 👋🏽</h1>
-<p>Welcome to your VGS creative workspace. Manage your projects, bookings and payments from one place.</p>
-<div class="dash-actions"><a href="booking.html" class="btn">📅 Book a Service</a><a href="index.html#contact" class="btn">💬 Contact VGS</a></div>
-<div class="dash-grid">
-<div class="dash-stat"><span>Active Projects</span><strong id="stat-projects">0</strong></div>
-<div class="dash-stat"><span>Pending Bookings</span><strong id="stat-bookings">0</strong></div>
-<div class="dash-stat"><span>Outstanding Balance</span><strong id="stat-balance">₦0</strong></div>
-<div class="dash-stat"><span>Unread Messages</span><strong id="stat-messages">0</strong></div>
-</div>
-</div></section>
-<section><div class="container dash-layout">
-<div>
-<div class="dash-panel"><h3>📂 My Projects</h3><div id="projects-list"><div class="empty-state">Loading your projects...</div></div></div>
-<div class="dash-panel"><h3>📅 Recent Bookings</h3><div id="bookings-list"><div class="empty-state">Loading your bookings...</div></div></div>
-</div>
-<aside>
-<div class="dash-panel"><h3>💳 Payments</h3><div id="invoices-list"><div class="empty-state">Loading invoices...</div></div></div>
-<div class="dash-panel"><h3>💬 Messages</h3><div id="messages-list"><div class="empty-state">Your VGS messages will appear here.</div></div></div>
-<div class="dash-panel"><h3>👤 My Profile</h3><div id="profile-card"><div class="empty-state">Loading profile...</div></div></div>
-</aside>
-</div></section>
-</main>
-<footer><div class="container"><p>© 2026 Vitch Graphic Studio. All Rights Reserved.</p></div></footer>
-<script src="script.js"></script>
-<script type="module">
-import { supabase } from './vgs-auth.js?v=3';
-
-const money = (amount, currency='NGN') => new Intl.NumberFormat('en-NG',{style:'currency',currency,maximumFractionDigits:0}).format(Number(amount||0));
-const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-
-async function loadDashboard(){
-  const {data:{user}} = await supabase.auth.getUser();
-  if(!user){ window.location.href='auth.html?redirect=dashboard.html'; return; }
-
-  const [profileRes, projectsRes, bookingsRes, invoicesRes, messagesRes] = await Promise.all([
-    supabase.from('profiles').select('full_name,phone,role').eq('id',user.id).maybeSingle(),
-    supabase.from('projects').select('id,title,service,status,progress,budget,currency,deadline').eq('client_id',user.id).order('created_at',{ascending:false}),
-    supabase.from('bookings').select('id,service,project_title,status,budget,currency,deadline,created_at').eq('client_id',user.id).order('created_at',{ascending:false}),
-    supabase.from('invoices').select('id,amount,currency,status,due_date').eq('client_id',user.id).order('created_at',{ascending:false}),
-    supabase.from('messages').select('id,message,sender_role,created_at').eq('client_id',user.id).order('created_at',{ascending:false}).limit(5)
-  ]);
-
-  const projects=projectsRes.data||[], bookings=bookingsRes.data||[], invoices=invoicesRes.data||[], messages=messagesRes.data||[];
-  document.getElementById('stat-projects').textContent=projects.filter(p=>!['completed','cancelled'].includes(p.status)).length;
-  document.getElementById('stat-bookings').textContent=bookings.filter(b=>!['completed','cancelled'].includes(b.status)).length;
-  document.getElementById('stat-balance').textContent=money(invoices.filter(i=>i.status!=='paid'&&i.status!=='cancelled').reduce((s,i)=>s+Number(i.amount||0),0));
-  document.getElementById('stat-messages').textContent=messages.filter(m=>m.sender_role==='admin').length;
-
-  const profile=profileRes.data;
-  document.querySelector('[data-auth-name]').textContent=profile?.full_name||user.email||'Client';
-  document.getElementById('profile-card').innerHTML=`<p><strong>${esc(profile?.full_name||'Client')}</strong></p><p>${esc(user.email)}</p><p>${esc(profile?.phone||'Phone not added')}</p>`;
-
-  document.getElementById('projects-list').innerHTML=projects.length?projects.map(p=>`<div class="project-row"><div><strong>${esc(p.title)}</strong><br><small>${esc(p.service)} · ${esc(p.status)}</small><div class="progress"><span style="width:${Number(p.progress||0)}%"></span></div><small>${Number(p.progress||0)}% complete${p.deadline?' · Deadline '+esc(p.deadline):''}</small></div><strong>${p.budget?money(p.budget,p.currency):'—'}</strong></div>`).join(''):'<div class="empty-state">No projects yet. Once VGS accepts a project, it will appear here.</div>';
-  document.getElementById('bookings-list').innerHTML=bookings.length?bookings.slice(0,5).map(b=>`<div class="activity-row"><div><strong>${esc(b.project_title)}</strong><br><small>${esc(b.service)} · ${esc(b.status)}</small></div><strong>${b.budget?money(b.budget,b.currency):'—'}</strong></div>`).join(''):'<div class="empty-state">No bookings yet. <a href="booking.html">Book your first service →</a></div>';
-  document.getElementById('invoices-list').innerHTML=invoices.length?invoices.slice(0,5).map(i=>`<div class="activity-row"><div><strong>${money(i.amount,i.currency)}</strong><br><small>${esc(i.status)}${i.due_date?' · Due '+esc(i.due_date):''}</small></div></div>`).join(''):'<div class="empty-state">No invoices yet.</div>';
-  document.getElementById('messages-list').innerHTML=messages.length?messages.map(m=>`<div class="activity-row"><div><small>${esc(m.sender_role)}</small><br>${esc(m.message)}</div></div>`).join(''):'<div class="empty-state">No messages yet.</div>';
-}
-
-loadDashboard().catch(error=>{ console.error(error); document.getElementById('projects-list').innerHTML='<div class="empty-state">We could not load your dashboard data yet. Please refresh and try again.</div>'; });
-</script>
-</body>
-</html>
+<body><header class="header"><div class="container"><a href="index.html" class="logo">VITCH GRAPHIC STUDIO</a><div class="dash-actions"><button class="btn" data-vgs-logout type="button">Logout</button></div></div></header>
+<main><section class="dashboard-hero"><div class="container"><h1>Welcome back, <span class="profile-name" data-auth-name>Client</span> 👋🏽</h1><p>Welcome to your VGS creative workspace. Manage your projects, bookings and payments from one place.</p><div class="dash-actions"><a href="booking.html" class="btn">📅 Book a Service</a><a href="index.html#contact" class="btn">💬 Contact VGS</a></div><div class="dash-grid"><div class="dash-stat"><span>Active Projects</span><strong id="stat-projects">0</strong></div><div class="dash-stat"><span>Pending Bookings</span><strong id="stat-bookings">0</strong></div><div class="dash-stat"><span>Outstanding Balance</span><strong id="stat-balance">₦0</strong></div><div class="dash-stat"><span>Unread Messages</span><strong id="stat-messages">0</strong></div></div></div></section><section><div class="container dash-layout"><div><div class="dash-panel"><h3>📂 My Projects</h3><div id="projects-list"><div class="empty-state">Loading your projects...</div></div></div><div class="dash-panel"><h3>📅 Recent Bookings</h3><div id="bookings-list"><div class="empty-state">Loading your bookings...</div></div></div></div><aside><div class="dash-panel"><h3>💳 Payments</h3><div id="invoices-list"><div class="empty-state">Loading invoices...</div></div></div><div class="dash-panel"><h3>💬 Messages</h3><div id="messages-list"><div class="empty-state">Your VGS messages will appear here.</div></div></div><div class="dash-panel"><h3>👤 My Profile</h3><div id="profile-card"><div class="empty-state">Loading profile...</div></div></div></aside></div></section></main><footer><div class="container"><p>© 2026 Vitch Graphic Studio. All Rights Reserved.</p></div></footer>
+<script src="script.js?v=7"></script><script type="module">
+import { supabase } from './vgs-auth.js?v=7';
+const money=(amount,currency='NGN')=>new Intl.NumberFormat('en-NG',{style:'currency',currency,maximumFractionDigits:0}).format(Number(amount||0));const esc=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+async function loadDashboard(){const {data:{user}}=await supabase.auth.getUser();if(!user){window.location.href='auth.html?redirect=dashboard.html';return;}const [profileRes,projectsRes,bookingsRes,invoicesRes,messagesRes]=await Promise.all([supabase.from('profiles').select('full_name,phone,role').eq('id',user.id).maybeSingle(),supabase.from('projects').select('id,title,service,status,progress,budget,currency,deadline').eq('client_id',user.id).order('created_at',{ascending:false}),supabase.from('bookings').select('id,service,project_title,status,budget,currency,deadline,created_at').eq('client_id',user.id).order('created_at',{ascending:false}),supabase.from('invoices').select('id,amount,currency,status,due_date').eq('client_id',user.id).order('created_at',{ascending:false}),supabase.from('messages').select('id,message,sender_role,created_at').eq('client_id',user.id).order('created_at',{ascending:false}).limit(5)]);const projects=projectsRes.data||[],bookings=bookingsRes.data||[],invoices=invoicesRes.data||[],messages=messagesRes.data||[];document.getElementById('stat-projects').textContent=projects.filter(p=>!['completed','cancelled'].includes(p.status)).length;document.getElementById('stat-bookings').textContent=bookings.filter(b=>!['completed','cancelled'].includes(b.status)).length;document.getElementById('stat-balance').textContent=money(invoices.filter(i=>i.status!=='paid'&&i.status!=='cancelled').reduce((s,i)=>s+Number(i.amount||0),0));document.getElementById('stat-messages').textContent=messages.filter(m=>m.sender_role==='admin').length;const profile=profileRes.data;document.querySelector('[data-auth-name]').textContent=profile?.full_name||user.email||'Client';document.getElementById('profile-card').innerHTML=`<p><strong>${esc(profile?.full_name||'Client')}</strong></p><p>${esc(user.email)}</p><p>${esc(profile?.phone||'Phone not added')}</p>`;document.getElementById('projects-list').innerHTML=projects.length?projects.map(p=>`<div class="project-row"><div><strong>${esc(p.title)}</strong><br><small>${esc(p.service)} · ${esc(p.status)}</small><div class="progress"><span style="width:${Number(p.progress||0)}%"></span></div><small>${Number(p.progress||0)}% complete${p.deadline?' · Deadline '+esc(p.deadline):''}</small></div><strong>${p.budget?money(p.budget,p.currency):'—'}</strong></div>`).join(''):'<div class="empty-state">No projects yet. Once VGS accepts a project, it will appear here.</div>';document.getElementById('bookings-list').innerHTML=bookings.length?bookings.slice(0,5).map(b=>`<div class="activity-row"><div><strong>${esc(b.project_title)}</strong><br><small>${esc(b.service)} · ${esc(b.status)}</small></div><strong>${b.budget?money(b.budget,b.currency):'—'}</strong></div>`).join(''):'<div class="empty-state">No bookings yet. <a href="booking.html">Book your first service →</a></div>';document.getElementById('invoices-list').innerHTML=invoices.length?invoices.slice(0,5).map(i=>`<div class="activity-row"><div><strong>${money(i.amount,i.currency)}</strong><br><small>${esc(i.status)}${i.due_date?' · Due '+esc(i.due_date):''}</small></div></div>`).join(''):'<div class="empty-state">No invoices yet.';document.getElementById('messages-list').innerHTML=messages.length?messages.map(m=>`<div class="activity-row"><div><small>${esc(m.sender_role)}</small><br>${esc(m.message)}</div></div>`).join(''):'<div class="empty-state">No messages yet.</div>';}
+loadDashboard().catch(error=>{console.error(error);document.getElementById('projects-list').innerHTML='<div class="empty-state">We could not load your dashboard data yet. Please refresh and try again.</div>';});
+</script></body></html>
