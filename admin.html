@@ -36,23 +36,24 @@
 </div></section>
 </main>
 <footer><div class="container"><p>© 2026 Vitch Graphic Studio. All Rights Reserved.</p></div></footer>
-<script src="script.js?v=7"></script>
+<script src="script.js?v=8"></script>
 <script type="module">
-import { supabase } from './vgs-auth.js?v=7';
+import { supabase } from './vgs-auth.js?v=9';
 const esc=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const money=(amount,currency='NGN')=>new Intl.NumberFormat('en-NG',{style:'currency',currency,maximumFractionDigits:0}).format(Number(amount||0));
 
 async function loadAdmin(){
  const {data:{user}}=await supabase.auth.getUser();
  if(!user){window.location.href='auth.html?redirect=admin.html';return;}
- const {data:profile,error:profileError}=await supabase.from('profiles').select('full_name,role').eq('id',user.id).maybeSingle();
- if(profileError||!profile||profile.role!=='admin'){
-   document.getElementById('admin-notice').textContent='This account is not an administrator. Admin access must be assigned securely in Supabase.';
+ const {data:isAdmin,error:adminError}=await supabase.rpc('is_vgs_admin');
+ if(adminError || isAdmin !== true){
+   document.getElementById('admin-notice').textContent='This account does not have administrator access yet.';
    await supabase.auth.signOut();
    setTimeout(()=>window.location.href='auth.html',1200);
    return;
  }
- document.querySelector('[data-auth-name]').textContent=profile.full_name||user.email||'Administrator';
+ const {data:profile}=await supabase.from('profiles').select('full_name,email,role').eq('id',user.id).maybeSingle();
+ document.querySelector('[data-auth-name]').textContent=profile?.full_name||user.email||'Administrator';
  const [clients,bookings,projects,invoices]=await Promise.all([
    supabase.from('profiles').select('id,full_name,phone,created_at').eq('role','client').order('created_at',{ascending:false}).limit(10),
    supabase.from('bookings').select('id,client_id,service,project_title,status,budget,currency,deadline,created_at').order('created_at',{ascending:false}).limit(20),
@@ -72,7 +73,7 @@ async function loadAdmin(){
  document.getElementById('projects-table').innerHTML=p.length?`<table class="admin-table"><thead><tr><th>Project</th><th>Client</th><th>Progress</th><th>Status</th></tr></thead><tbody>${p.map(x=>`<tr><td><strong>${esc(x.title)}</strong><br><small>${esc(x.service)}</small></td><td>${esc(names.get(x.client_id)||'Client')}</td><td>${Number(x.progress||0)}%</td><td><span class="status">${esc(x.status)}</span></td></tr>`).join('')}</tbody></table>`:'<div class="admin-empty">No projects yet.</div>';
  document.getElementById('invoices-table').innerHTML=i.length?`<table class="admin-table"><thead><tr><th>Client</th><th>Amount</th><th>Status</th></tr></thead><tbody>${i.map(x=>`<tr><td>${esc(names.get(x.client_id)||'Client')}</td><td>${money(x.amount,x.currency)}</td><td><span class="status">${esc(x.status)}</span></td></tr>`).join('')}</tbody></table>`:'<div class="admin-empty">No outstanding invoices.</div>';
 }
-loadAdmin().catch(error=>{console.error(error);document.getElementById('admin-notice').textContent='Admin data could not be loaded yet. The database connection or admin permissions need to be checked.';});
+loadAdmin().catch(error=>{console.error(error);document.getElementById('admin-notice').textContent='Admin access is confirmed, but dashboard data could not be loaded yet. Check the table permissions in Supabase.';});
 </script>
 </body>
 </html>
