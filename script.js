@@ -158,6 +158,6 @@ document.head.appendChild(vgsAutomationLoader);
 
 const vgsAuthLoader = document.createElement("script");
 vgsAuthLoader.type = "module";
-vgsAuthLoader.src = "vgs-auth.js?v=4";
+vgsAuthLoader.src = "vgs-auth.js?v=7";
 vgsAuthLoader.defer = true;
 document.head.appendChild(vgsAuthLoader);
