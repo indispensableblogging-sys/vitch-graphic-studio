@@ -6,7 +6,7 @@
 <title>Admin Dashboard | Vitch Graphic Studio</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.admin-hero{padding:48px 0 24px}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin:24px 0}.admin-stat{padding:20px;border:1px solid rgba(212,175,55,.25);border-radius:18px;background:rgba(255,255,255,.04)}.admin-stat strong{display:block;font-size:28px;color:#d4af37;margin-top:7px}.admin-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}.admin-panel{padding:24px;border:1px solid rgba(212,175,55,.22);border-radius:20px;background:rgba(255,255,255,.035);margin-bottom:20px;overflow:auto}.admin-panel h3{color:#d4af37;margin-top:0}.admin-table{width:100%;border-collapse:collapse;min-width:600px}.admin-table th,.admin-table td{text-align:left;padding:13px 10px;border-bottom:1px solid rgba(255,255,255,.08)}.admin-table th{color:#d4af37;font-size:13px}.admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-btn{border:1px solid rgba(212,175,55,.5);background:transparent;color:#fff;border-radius:8px;padding:8px 10px;cursor:pointer}.admin-btn:hover{background:rgba(212,175,55,.12)}.status{font-size:12px;padding:5px 8px;border-radius:12px;background:rgba(212,175,55,.12);color:#d4af37}.admin-empty{color:#aaa;padding:18px 0}.admin-notice{padding:14px;border-radius:12px;background:rgba(212,175,55,.08);color:#ddd;margin-bottom:18px}@media(max-width:800px){.admin-layout{grid-template-columns:1fr}}
+.admin-hero{padding:48px 0 24px}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin:24px 0}.admin-stat{padding:20px;border:1px solid rgba(212,175,55,.25);border-radius:18px;background:rgba(255,255,255,.04)}.admin-stat strong{display:block;font-size:28px;color:#d4af37;margin-top:7px}.admin-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}.admin-panel{padding:24px;border:1px solid rgba(212,175,55,.22);border-radius:20px;background:rgba(255,255,255,.035);margin-bottom:20px;overflow:auto}.admin-panel h3{color:#d4af37;margin-top:0}.admin-table{width:100%;border-collapse:collapse;min-width:600px}.admin-table th,.admin-table td{text-align:left;padding:13px 10px;border-bottom:1px solid rgba(255,255,255,.08)}.admin-table th{color:#d4af37;font-size:13px}.admin-actions{display:flex;gap:8px;flex-wrap:wrap}.status{font-size:12px;padding:5px 8px;border-radius:12px;background:rgba(212,175,55,.12);color:#d4af37}.admin-empty{color:#aaa;padding:18px 0}.admin-notice{padding:14px;border-radius:12px;background:rgba(212,175,55,.08);color:#ddd;margin-bottom:18px}@media(max-width:800px){.admin-layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -45,26 +45,10 @@ const money=(amount,currency='NGN')=>new Intl.NumberFormat('en-NG',{style:'curre
 async function loadAdmin(){
  const {data:{user},error:userError}=await supabase.auth.getUser();
  if(userError||!user){window.location.href='auth.html?redirect=admin.html';return;}
-
- // Prefer the user's own profile record. The profiles RLS policy explicitly allows
- // authenticated users to read their own profile, so this is reliable even if the
- // admin RPC is unavailable during page startup.
  const {data:profile,error:profileError}=await supabase.from('profiles').select('id,full_name,email,role').eq('id',user.id).maybeSingle();
  let admin = profile?.role === 'admin';
-
- // RPC is only a fallback/confirmation, never a reason to reject a known admin profile.
- if(!admin){
-   const {data:rpcAdmin}=await supabase.rpc('is_vgs_admin');
-   admin = rpcAdmin === true;
- }
-
- if(!admin){
-   document.getElementById('admin-notice').textContent='This account does not have administrator access yet.';
-   await supabase.auth.signOut();
-   setTimeout(()=>window.location.href='auth.html',1200);
-   return;
- }
-
+ if(!admin){const {data:rpcAdmin}=await supabase.rpc('is_vgs_admin');admin=rpcAdmin===true;}
+ if(!admin){document.getElementById('admin-notice').textContent='This account does not have administrator access yet.';await supabase.auth.signOut();setTimeout(()=>window.location.href='auth.html',1200);return;}
  document.querySelector('[data-auth-name]').textContent=profile?.full_name||user.email||'Administrator';
  const [clients,bookings,projects,invoices]=await Promise.all([
    supabase.from('profiles').select('id,full_name,phone,created_at').eq('role','client').order('created_at',{ascending:false}).limit(10),
@@ -72,7 +56,7 @@ async function loadAdmin(){
    supabase.from('projects').select('id,client_id,title,service,status,progress,budget,currency,deadline,created_at').order('created_at',{ascending:false}).limit(20),
    supabase.from('invoices').select('id,client_id,amount,currency,status,due_date,created_at').neq('status','paid').neq('status','cancelled').order('created_at',{ascending:false}).limit(20)
  ]);
- if(clients.error||bookings.error||projects.error||invoices.error){throw new Error(clients.error?.message||bookings.error?.message||projects.error?.message||invoices.error?.message);}
+ if(clients.error||bookings.error||projects.error||invoices.error)throw new Error(clients.error?.message||bookings.error?.message||projects.error?.message||invoices.error?.message);
  const c=clients.data||[],b=bookings.data||[],p=projects.data||[],i=invoices.data||[];
  document.getElementById('stat-clients').textContent=c.length;
  document.getElementById('stat-bookings').textContent=b.filter(x=>!['approved','completed','cancelled'].includes(x.status)).length;
