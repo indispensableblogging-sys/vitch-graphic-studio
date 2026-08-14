@@ -31,6 +31,7 @@ function loadVgsScript(src,type="text/javascript"){
 }
 
 const isDashboard=/dashboard\.html$/.test(location.pathname);
+const isAdmin=/admin\.html$/.test(location.pathname);
 
 // The dashboard has one receptionist only. The older menu-driven assistant and
 // its fix/automation layers are deliberately not loaded there, which prevents
@@ -38,6 +39,7 @@ const isDashboard=/dashboard\.html$/.test(location.pathname);
 if(isDashboard){
   loadVgsScript("vgs-auth.js?v=13","module");
   loadVgsScript("vgs-receptionist-v4.js?v=1","text/javascript");
+  loadVgsScript("vgs-project-sync.js?v=1","text/javascript");
 }else{
   loadVgsScript("ai-assistant.js?v=7");
   loadVgsScript("ai-fix.js?v=4");
@@ -45,4 +47,5 @@ if(isDashboard){
   loadVgsScript("vgs-auth.js?v=13","module");
   loadVgsScript("vgs-presence.js?v=2","module");
   loadVgsScript("vgs-ai-presence.js?v=2","module");
+  if(isAdmin) loadVgsScript("vgs-project-sync.js?v=1","text/javascript");
 }
