@@ -15,19 +15,34 @@ if(slider){let scrollAmount=0;setInterval(()=>{const firstCard=slider.querySelec
 const counters=document.querySelectorAll(".counter");
 counters.forEach(counter=>{const update=()=>{const target=+counter.getAttribute("data-target"),current=+counter.innerText,increment=Math.ceil(target/100);if(current<target){counter.innerText=current+increment;setTimeout(update,20);}else counter.innerText=target+"+";};update();});
 
-// Do not let a JavaScript error leave the preloader covering the page.
+// Always fail open: a JavaScript error must never leave the preloader covering the page.
 function hideVgsPreloader(){const p=document.getElementById("preloader");if(!p)return;p.style.opacity="0";p.style.visibility="hidden";p.style.pointerEvents="none";p.style.display="none";}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",hideVgsPreloader,{once:true});else hideVgsPreloader();
 window.addEventListener("load",hideVgsPreloader,{once:true});
 setTimeout(hideVgsPreloader,1500);
 
-// Load the client receptionist independently. A failure in another AI script must
-// never prevent the receptionist from appearing.
-function loadVgsScript(src,type="text/javascript"){const s=document.createElement("script");s.src=src;s.defer=true;if(type!=="text/javascript")s.type=type;document.head.appendChild(s);return s;}
-loadVgsScript("ai-assistant.js?v=6");
-loadVgsScript("ai-fix.js?v=3");
-loadVgsScript("ai-automation.js?v=2");
-loadVgsScript("vgs-auth.js?v=7","module");
-loadVgsScript("vgs-presence.js?v=1","module");
-loadVgsScript("vgs-ai-presence.js?v=1","module");
-loadVgsScript("vgs-chatbot-fix.js?v=3","module");
+function loadVgsScript(src,type="text/javascript"){
+  const s=document.createElement("script");
+  s.src=src;
+  s.defer=true;
+  if(type!=="text/javascript")s.type=type;
+  document.head.appendChild(s);
+  return s;
+}
+
+const isDashboard=/dashboard\.html$/.test(location.pathname);
+
+// The dashboard has one receptionist only. The older menu-driven assistant and
+// its fix/automation layers are deliberately not loaded there, which prevents
+// duplicate listeners and the repeating-reply problem.
+if(isDashboard){
+  loadVgsScript("vgs-auth.js?v=13","module");
+  loadVgsScript("vgs-chatbot-fix.js?v=4","text/javascript");
+}else{
+  loadVgsScript("ai-assistant.js?v=7");
+  loadVgsScript("ai-fix.js?v=4");
+  loadVgsScript("ai-automation.js?v=3");
+  loadVgsScript("vgs-auth.js?v=13","module");
+  loadVgsScript("vgs-presence.js?v=2","module");
+  loadVgsScript("vgs-ai-presence.js?v=2","module");
+}
