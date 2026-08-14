@@ -161,8 +161,15 @@ vgsAuthLoader.type = "module";
 vgsAuthLoader.src = "vgs-auth.js?v=7";
 vgsAuthLoader.defer = true;
 document.head.appendChild(vgsAuthLoader);
+
 const vgsPresenceLoader = document.createElement("script");
 vgsPresenceLoader.type = "module";
 vgsPresenceLoader.src = "vgs-presence.js?v=1";
 vgsPresenceLoader.defer = true;
 document.head.appendChild(vgsPresenceLoader);
+
+const vgsAiPresenceLoader = document.createElement("script");
+vgsAiPresenceLoader.type = "module";
+vgsAiPresenceLoader.src = "vgs-ai-presence.js?v=1";
+vgsAiPresenceLoader.defer = true;
+document.head.appendChild(vgsAiPresenceLoader);
