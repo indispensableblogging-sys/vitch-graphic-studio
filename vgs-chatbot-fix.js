@@ -70,15 +70,27 @@ import { getVgsTeamAvailability } from './vgs-presence.js?v=1';
     return services.find(s => lower.includes(s.toLowerCase())) || Object.keys(aliases).reduce((found,k)=>found|| (lower.includes(k)?aliases[k]:''),'');
   };
 
+  const explicitServiceRequest = text => /\b(i need|i want|i would like|i'd like|looking for|need a|want a|book|for my)\b/i.test(text) && !!serviceFor(text);
+
   const respond = async raw => {
     const text = raw.trim();
     if (!text) return;
     add(text,'user');
     const lower = text.toLowerCase();
     const service = serviceFor(text);
+    const userMessages = history.filter(x => x.who === 'user');
 
-    // Important: detect the client's actual request before checking for a greeting.
-    if (service) {
+    // Once a service has been selected, project details must be handled as the next
+    // conversation turn. Do NOT run service detection again on words like "brand"
+    // or "logo" inside the client's project description.
+    if (pendingService && userMessages.length > 1 && !explicitServiceRequest(text)) {
+      add(`Perfect — I’ve got those details for the ${pendingService} brief. 👍🏽\n\nNext, tell me the target audience, your preferred deadline, and any examples or references you like. If you’re not sure about any of these, just say so and I’ll help you decide.`);
+      return;
+    }
+
+    // Detect the client's actual service request only before a service is selected,
+    // or when they explicitly ask to switch/request another service.
+    if (service && (!pendingService || explicitServiceRequest(text))) {
       pendingService = service;
       add(`Great — ${service} sounds like a good fit. 🎨\n\n${prompts[service]}\n\nGive me those details and I’ll keep building the brief with you.`);
       return;
@@ -107,11 +119,6 @@ import { getVgsTeamAvailability } from './vgs-presence.js?v=1';
     if (/human|person|staff|designer|team|agent/.test(lower)) {
       await refresh();
       add(online ? '🟢 A VGS team member is online. You can request human support now.' : 'Nobody from the VGS team is online right now, but you’re not stuck — I can collect your project details for the team.');
-      return;
-    }
-
-    if (pendingService && history.filter(x => x.who === 'user').length > 1) {
-      add(`Perfect. I’ve noted that this is for ${pendingService}. 👍🏽\n\nNow tell me who the project is for, the style you want, your deadline, and your approximate budget if you have one.`);
       return;
     }
 
