@@ -5,361 +5,70 @@
   const STATE_KEY = 'vgs_receptionist_state_v3';
   const CHAT_KEY = 'vgs_receptionist_chat_v3';
   const services = {
-    'Logo Design': {
-      aliases: ['logo', 'logos'],
-      fields: [
-        ['brand', 'What is the brand or business name?'],
-        ['style', 'What style do you want — for example luxury, minimalist, streetwear, bold, or something else?'],
-        ['colors', 'What colours would you like?'],
-        ['goal', 'What should the logo communicate or make people feel?'],
-        ['audience', 'Who is the logo mainly for?'],
-        ['deadline', 'When would you like it completed?'],
-        ['budget', 'Do you have a budget in mind?']
-      ]
-    },
-    'Website Design': {
-      aliases: ['website', 'web site', 'web'],
-      fields: [
-        ['business', 'What is the business or website name?'],
-        ['pages', 'Which pages do you need — for example Home, About, Services, Contact, Shop?'],
-        ['features', 'What important features should the website have?'],
-        ['style', 'What visual style do you want, or do you have a website you like?'],
-        ['audience', 'Who is the website for?'],
-        ['deadline', 'When would you like it completed?'],
-        ['budget', 'Do you have a budget in mind?']
-      ]
-    },
-    'Mobile App': {
-      aliases: ['mobile app', 'app', 'application'],
-      fields: [
-        ['app', 'What should the app do?'],
-        ['audience', 'Who will use the app?'],
-        ['features', 'What are the most important features?'],
-        ['platform', 'Should it be Android, iPhone, or both?'],
-        ['style', 'What look and feel do you want?'],
-        ['deadline', 'When would you like it completed?'],
-        ['budget', 'Do you have a budget in mind?']
-      ]
-    },
-    'Brand Identity': {
-      aliases: ['brand identity', 'branding', 'brand'],
-      fields: [
-        ['business', 'What is the business or brand name?'],
-        ['industry', 'What industry is the business in?'],
-        ['audience', 'Who is your target audience?'],
-        ['materials', 'Which brand materials do you need — logo, colours, typography, business cards, social templates, or a full system?'],
-        ['style', 'What style or personality should the brand have?'],
-        ['deadline', 'When would you like it completed?'],
-        ['budget', 'Do you have a budget in mind?']
-      ]
-    },
-    'Video Editing': {
-      aliases: ['video', 'videos'],
-      fields: [
-        ['videoType', 'What type of video are you creating — advert, social media video, promo, YouTube video, or something else?'],
-        ['duration', 'About how long will the finished video be?'],
-        ['footage', 'Do you already have the footage, photos, music, or other assets?'],
-        ['style', 'What editing style do you want?'],
-        ['platform', 'Where will the video be used?'],
-        ['deadline', 'When would you like it completed?'],
-        ['budget', 'Do you have a budget in mind?']
-      ]
-    },
-    'Photo Editing': {
-      aliases: ['photo', 'photos', 'photo editing', 'retouching'],
-      fields: [
-        ['quantity', 'How many photos need editing?'],
-        ['editing', 'What kind of editing do you need?'],
-        ['style', 'What final look do you want?'],
-        ['references', 'Do you have reference images or examples you like?'],
-        ['deadline', 'When would you like them completed?'],
-        ['budget', 'Do you have a budget in mind?']
-      ]
-    },
-    'Printing': {
-      aliases: ['printing', 'print'],
-      fields: [
-        ['item', 'What do you want printed?'],
-        ['quantity', 'How many do you need?'],
-        ['size', 'What size should they be?'],
-        ['material', 'Do you have a preferred paper or material?'],
-        ['deadline', 'When do you need them?'],
-        ['budget', 'Do you have a budget in mind?']
-      ]
-    },
-    Other: {
-      aliases: ['other'],
-      fields: [
-        ['project', 'Tell me what you want to create and I’ll help shape it into a clear brief.'],
-        ['audience', 'Who is it for?'],
-        ['deadline', 'When would you like it completed?'],
-        ['budget', 'Do you have a budget in mind?']
-      ]
-    }
+    'Logo Design': { aliases:['logo','logos'], fields:[['brand','What is the brand or business name?'],['style','What style do you want — for example luxury, minimalist, streetwear, bold, or something else?'],['colors','What colours would you like?'],['goal','What should the logo communicate or make people feel?'],['audience','Who is the logo mainly for?'],['deadline','When would you like it completed?'],['budget','Do you have a budget in mind?']] },
+    'Website Design': { aliases:['website','web site','web'], fields:[['business','What is the business or website name?'],['pages','Which pages do you need — for example Home, About, Services, Contact, Shop?'],['features','What important features should the website have?'],['style','What visual style do you want, or do you have a website you like?'],['audience','Who is the website for?'],['deadline','When would you like it completed?'],['budget','Do you have a budget in mind?']] },
+    'Mobile App': { aliases:['mobile app','app','application'], fields:[['app','What should the app do?'],['audience','Who will use the app?'],['features','What are the most important features?'],['platform','Should it be Android, iPhone, or both?'],['style','What look and feel do you want?'],['deadline','When would you like it completed?'],['budget','Do you have a budget in mind?']] },
+    'Brand Identity': { aliases:['brand identity','branding','brand'], fields:[['business','What is the business or brand name?'],['industry','What industry is the business in?'],['audience','Who is your target audience?'],['materials','Which brand materials do you need — logo, colours, typography, business cards, social templates, or a full system?'],['style','What style or personality should the brand have?'],['deadline','When would you like it completed?'],['budget','Do you have a budget in mind?']] },
+    'Video Editing': { aliases:['video','videos'], fields:[['videoType','What type of video are you creating — advert, social media video, promo, YouTube video, or something else?'],['duration','About how long will the finished video be?'],['footage','Do you already have the footage, photos, music, or other assets?'],['style','What editing style do you want?'],['platform','Where will the video be used?'],['deadline','When would you like it completed?'],['budget','Do you have a budget in mind?']] },
+    'Photo Editing': { aliases:['photo','photos','photo editing','retouching'], fields:[['quantity','How many photos need editing?'],['editing','What kind of editing do you need?'],['style','What final look do you want?'],['references','Do you have reference images or examples you like?'],['deadline','When would you like them completed?'],['budget','Do you have a budget in mind?']] },
+    'Printing': { aliases:['printing','print'], fields:[['item','What do you want printed?'],['quantity','How many do you need?'],['size','What size should they be?'],['material','Do you have a preferred paper or material?'],['deadline','When do you need them?'],['budget','Do you have a budget in mind?']] },
+    Other: { aliases:['other'], fields:[['project','Tell me what you want to create and I’ll help shape it into a clear brief.'],['audience','Who is it for?'],['deadline','When would you like it completed?'],['budget','Do you have a budget in mind?']] }
   };
 
-  const packagePrices = {
-    'Logo Design': { Basic: 5000, Standard: 15000, Premium: 35000 },
-    'Website Design': { Basic: 15000, Standard: 35000, Premium: 75000 },
-    'Mobile App': { Basic: 30000, Standard: 80000, Premium: 150000 },
-    'Photo Editing': { Basic: 3000, Standard: 8000, Premium: 15000 },
-    Printing: { Basic: 5000, Standard: 15000, Premium: 35000 },
-    'Brand Identity': { Basic: 15000, Standard: 40000, Premium: 100000 },
-    'Video Editing': { Basic: 10000, Standard: 30000, Premium: 75000 },
-    Other: { Basic: null, Standard: null, Premium: null }
+  const packagePrices = {'Logo Design':{Basic:5000,Standard:15000,Premium:35000},'Website Design':{Basic:15000,Standard:35000,Premium:75000},'Mobile App':{Basic:30000,Standard:80000,Premium:150000},'Photo Editing':{Basic:3000,Standard:8000,Premium:15000},Printing:{Basic:5000,Standard:15000,Premium:35000},'Brand Identity':{Basic:15000,Standard:40000,Premium:100000},'Video Editing':{Basic:10000,Standard:30000,Premium:75000},Other:{Basic:null,Standard:null,Premium:null}};
+  const esc=value=>String(value??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));
+  const money=n=>n==null?'Custom quote':`₦${Number(n).toLocaleString()}`;
+  const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+  const defaultState=()=>({service:'',answers:{},lastField:'',complete:false});
+  const loadState=()=>{try{return {...defaultState(),...(JSON.parse(localStorage.getItem(STATE_KEY)||'{}'))};}catch(_){return defaultState();}};
+  const saveState=s=>{try{localStorage.setItem(STATE_KEY,JSON.stringify(s));}catch(_){}};
+  const loadChat=()=>{try{return JSON.parse(localStorage.getItem(CHAT_KEY)||'[]');}catch(_){return[];}};
+  const saveChat=h=>{try{localStorage.setItem(CHAT_KEY,JSON.stringify(h.slice(-40)));}catch(_){}};
+
+  let state=loadState(),history=loadChat(),online=false,busy=false;
+
+  const styles=()=>{
+    if(document.getElementById('vgs-chatbot-fix-styles'))return;
+    const style=document.createElement('style');style.id='vgs-chatbot-fix-styles';style.textContent=`#vgs-chatbot-fix{position:fixed;right:18px;bottom:18px;width:min(410px,calc(100vw - 24px));height:min(680px,calc(100vh - 35px));background:#111;color:#fff;border:1px solid ${GOLD};border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.65);z-index:100003;display:none;overflow:hidden;font-family:Arial,sans-serif}#vgs-chatbot-fix.open{display:flex;flex-direction:column}#vgs-chatbot-fix-head{background:${GOLD};color:#111;padding:15px 16px;display:flex;align-items:center;justify-content:space-between}#vgs-chatbot-fix-head strong{display:block;font-size:16px}.vgs-fix-status{font-size:11px;margin-top:3px;opacity:.8}#vgs-chatbot-fix-close{border:0;background:transparent;color:#111;font-size:24px;cursor:pointer}#vgs-chatbot-fix-messages{flex:1;overflow-y:auto;padding:16px;background:#101010}.vgs-fix-msg{max-width:86%;padding:11px 13px;border-radius:15px;margin:0 0 10px;line-height:1.45;font-size:14px;white-space:pre-wrap}.vgs-fix-msg.bot{background:#222;border:1px solid rgba(212,175,55,.25);border-bottom-left-radius:5px}.vgs-fix-msg.user{margin-left:auto;background:${GOLD};color:#111;border-bottom-right-radius:5px}.vgs-fix-typing{display:inline-flex;gap:4px;align-items:center}.vgs-fix-typing i{width:6px;height:6px;border-radius:50%;background:${GOLD};display:block;animation:vgsTyping 1s infinite}.vgs-fix-typing i:nth-child(2){animation-delay:.15s}.vgs-fix-typing i:nth-child(3){animation-delay:.3s}@keyframes vgsTyping{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}#vgs-chatbot-fix-quick{display:flex;gap:7px;overflow-x:auto;padding:9px 12px;border-top:1px solid #292929;background:#151515}.vgs-fix-quick{white-space:nowrap;border:1px solid ${GOLD};background:#1d1d1d;color:#fff;border-radius:999px;padding:8px 11px;font-size:12px;cursor:pointer}#vgs-chatbot-fix-form{display:flex;gap:8px;padding:10px;border-top:1px solid #292929;background:#151515}#vgs-chatbot-fix-input{flex:1;min-width:0;resize:none;height:44px;padding:11px;border-radius:12px;border:1px solid #555;background:#202020;color:#fff;font:inherit;box-sizing:border-box}#vgs-chatbot-fix-send{width:48px;border:0;border-radius:12px;background:${GOLD};color:#111;font-size:18px;font-weight:800;cursor:pointer}#vgs-chatbot-fix-send:disabled{opacity:.45;cursor:not-allowed}#vgs-chatbot-fix-toggle{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border:0;border-radius:50%;background:${GOLD};color:#111;font-size:25px;z-index:100004;cursor:pointer;box-shadow:0 10px 28px rgba(212,175,55,.4)}.vgs-fix-action{width:100%;border:1px solid ${GOLD};background:#1d1d1d;color:#fff;border-radius:10px;padding:11px 13px;margin-top:8px;cursor:pointer}.vgs-fix-action:hover{background:${GOLD};color:#111}@media(max-width:600px){#vgs-chatbot-fix{right:8px;bottom:8px;width:calc(100vw - 16px);height:calc(100vh - 16px);border-radius:18px}}`;document.head.appendChild(style);
   };
 
-  const esc = value => String(value ?? '').replace(/[&<>\"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '\"':'&quot;', "'":'&#39;' }[c]));
-  const money = n => n == null ? 'Custom quote' : `₦${Number(n).toLocaleString()}`;
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const addMessage=(text,who='bot',persist=true)=>{const box=document.getElementById('vgs-chatbot-fix-messages');if(!box)return;const el=document.createElement('div');el.className=`vgs-fix-msg ${who}`;el.textContent=text;box.appendChild(el);box.scrollTop=box.scrollHeight;if(persist){history.push({who,text});saveChat(history);}};
+  const renderHistory=()=>{const box=document.getElementById('vgs-chatbot-fix-messages');if(!box)return;box.innerHTML='';history.forEach(item=>addMessage(item.text,item.who,false));if(state.complete)addActionButtons();};
+  const typing=show=>{const box=document.getElementById('vgs-chatbot-fix-messages');if(!box)return;const old=document.getElementById('vgs-fix-typing');if(show&&!old){const el=document.createElement('div');el.id='vgs-fix-typing';el.className='vgs-fix-msg bot';el.innerHTML='<span class="vgs-fix-typing"><i></i><i></i><i></i></span>';box.appendChild(el);box.scrollTop=box.scrollHeight;}else if(!show&&old)old.remove();};
+  const refreshPresence=async()=>{try{const api=await import('./vgs-presence.js?v=2');const result=await Promise.race([api.getVgsTeamAvailability(),sleep(1800).then(()=>({online:false}))]);online=!!result.online;}catch(_){online=false;}const status=document.getElementById('vgs-chatbot-fix-status');if(status)status.textContent=online?'🟢 A VGS team member is online':'🤖 Team away • AI is handling clients';};
+  const detectService=text=>{const lower=text.toLowerCase();const names=Object.keys(services).filter(s=>s!=='Other');const exact=names.find(s=>lower.includes(s.toLowerCase()));if(exact)return exact;for(const name of names){if((services[name].aliases||[]).some(alias=>lower.includes(alias)))return name;}return'';};
+  const cleanValue=value=>String(value||'').replace(/^[\s,:-]+|[\s.,!?]+$/g,'').trim();
 
-  const defaultState = () => ({ service: '', answers: {}, lastField: '', complete: false });
-  const loadState = () => {
-    try { return { ...defaultState(), ...(JSON.parse(localStorage.getItem(STATE_KEY) || '{}')) }; }
-    catch (_) { return defaultState(); }
-  };
-  const saveState = state => { try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (_) {} };
-  const loadChat = () => { try { return JSON.parse(localStorage.getItem(CHAT_KEY) || '[]'); } catch (_) { return []; } };
-  const saveChat = history => { try { localStorage.setItem(CHAT_KEY, JSON.stringify(history.slice(-40))); } catch (_) {} };
+  const extractAnswers=text=>{const found={};const patterns={brand:/(?:brand|business)(?: name)?\s*(?:is|=|:)\s*([^,.;\n]+)/i,business:/(?:business|company)(?: name)?\s*(?:is|=|:)\s*([^,.;\n]+)/i,style:/(?:style|look|vibe)\s*(?:is|=|:)\s*([^,.;\n]+)/i,colors:/colou?rs?\s*(?:are|is|=|:)\s*([^.;\n]+)/i,goal:/(?:communicate|message|feel|meaning)\s*(?:is|should be|=|:)\s*([^.;\n]+)/i,audience:/(?:target audience|audience|customers?|clients?)\s*(?:are|is|=|:)\s*([^.;\n]+)/i,deadline:/(?:deadline|due|by|before)\s*(?:is|=|:)\s*([^.;\n]+)/i,budget:/(?:budget|spend|worth)\s*(?:is|=|:)\s*(₦?\s*[\d,]+(?:\.\d+)?|[\d,]+(?:\.\d+)?\s*(?:naira|ngn|k)?)/i,pages:/(?:pages?)\s*(?:are|include|=|:)\s*([^.;\n]+)/i,features:/(?:features?|functions?)\s*(?:are|include|need|=|:)\s*([^.;\n]+)/i,platform:/(?:platform|android|iphone|ios)\s*(?:is|=|:)\s*([^.;\n]+)/i,materials:/(?:materials?|brand materials?)\s*(?:are|include|need|=|:)\s*([^.;\n]+)/i,industry:/(?:industry|business type)\s*(?:is|=|:)\s*([^.;\n]+)/i,videoType:/(?:video type|type of video)\s*(?:is|=|:)\s*([^.;\n]+)/i,duration:/(?:duration|length)\s*(?:is|=|:)\s*([^.;\n]+)/i,footage:/(?:footage|assets?)\s*(?:is|are|=|:)\s*([^.;\n]+)/i,quantity:/(?:quantity|number|how many)\s*(?:is|are|=|:)\s*([^.;\n]+)/i,editing:/(?:editing|edit(?:ing)? type)\s*(?:is|=|:)\s*([^.;\n]+)/i,references:/(?:references?|examples?)\s*(?:are|include|=|:)\s*([^.;\n]+)/i,item:/(?:print|printing)\s*(?:item)?\s*(?:is|=|:)\s*([^.;\n]+)/i,size:/(?:size|dimensions?)\s*(?:is|=|:)\s*([^.;\n]+)/i,material:/(?:paper|material)\s*(?:is|=|:)\s*([^.;\n]+)/i,app:/(?:app)\s*(?:should|will)\s*([^.;\n]+)/i};Object.entries(patterns).forEach(([key,regex])=>{const match=text.match(regex);if(match?.[1])found[key]=cleanValue(match[1]);});const nameMatch=text.match(/(?:my name is|i am|i'm|name is)\s+([^,.;\n]+)/i);if(nameMatch)found.name=cleanValue(nameMatch[1]);const calledMatch=text.match(/(?:called|named)\s+([^,.;\n]+)/i);if(calledMatch&&!found.brand&&!found.business)found.brand=cleanValue(calledMatch[1]);const colors=text.match(/\b(black|white|gold|yellow|red|blue|green|purple|orange|pink|silver|brown|grey|gray)(?:\s*(?:and|,|&|\/ )\s*(black|white|gold|yellow|red|blue|green|purple|orange|pink|silver|brown|grey|gray))+/i);if(colors&&!found.colors)found.colors=cleanValue(colors[0]);return found;};
 
-  let state = loadState();
-  let history = loadChat();
-  let online = false;
-  let busy = false;
+  const currentFields=()=> (services[state.service]||services.Other).fields;
+  const missingField=()=>currentFields().find(([key])=>!state.answers[key]);
+  const intro=()=>{if(state.service&&Object.keys(state.answers).length){const known=Object.values(state.answers).filter(Boolean).slice(0,2).join(' and ');return `Welcome back 👋🏽 I still have your ${state.service} brief. We already captured ${known}. I won’t ask you for those again.`;}return `Welcome to Vitch Graphic Studio! 👋🏽\n\nI’m your AI receptionist. Tell me what you want to create in your own words — you don’t have to follow a form. I’ll remember what you tell me and only ask for the details we still need.`;};
+  const summary=()=>{const lines=Object.entries(state.answers).filter(([,v])=>v).map(([k,v])=>`${k}: ${v}`);const pkg=state.service&&packagePrices[state.service]?`\nPackage guide: Basic ${money(packagePrices[state.service].Basic)}, Standard ${money(packagePrices[state.service].Standard)}, Premium ${money(packagePrices[state.service].Premium)}`:'';return `Here’s the brief I’ve built so far:\n\nService: ${state.service}\n${lines.join('\n')}${pkg}`;};
+  const addActionButtons=()=>{const box=document.getElementById('vgs-chatbot-fix-messages');if(!box||document.getElementById('vgs-fix-actions'))return;const wrap=document.createElement('div');wrap.id='vgs-fix-actions';wrap.innerHTML='<button class="vgs-fix-action" data-vgs-action="send">📩 Send brief to VGS</button><button class="vgs-fix-action" data-vgs-action="edit">✏️ Keep chatting / add details</button><button class="vgs-fix-action" data-vgs-action="reset">🔄 Start a new project</button>';box.appendChild(wrap);box.scrollTop=box.scrollHeight;};
+  const finishIfReady=()=>{if(missingField())return false;state.complete=true;saveState(state);addMessage(`${summary()}\n\nThat’s enough for a solid first brief. 🎯 I can send this to VGS for review now. Would you like me to send it?`);addActionButtons();return true;};
+  const whatsapp=()=>{const lines=Object.entries(state.answers).filter(([,v])=>v).map(([k,v])=>`*${k}:* ${v}`).join('\n');const text=`Hello Vitch Graphic Studio 👋\n\n*New project brief*\n\n*Service:* ${state.service}\n${lines}\n\nPlease review and let me know the next step.`;window.open(`https://wa.me/2348083336746?text=${encodeURIComponent(text)}`,'_blank');};
+  const reset=()=>{state=defaultState();history=[];saveState(state);saveChat(history);const box=document.getElementById('vgs-chatbot-fix-messages');if(box)box.innerHTML='';addMessage(intro());addMessage('What would you like to create today?');};
 
-  const styles = () => {
-    if (document.getElementById('vgs-chatbot-fix-styles')) return;
-    const style = document.createElement('style');
-    style.id = 'vgs-chatbot-fix-styles';
-    style.textContent = `
-      #vgs-chatbot-fix{position:fixed;right:18px;bottom:18px;width:min(410px,calc(100vw - 24px));height:min(680px,calc(100vh - 35px));background:#111;color:#fff;border:1px solid ${GOLD};border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.65);z-index:100003;display:none;overflow:hidden;font-family:Arial,sans-serif}
-      #vgs-chatbot-fix.open{display:flex;flex-direction:column}
-      #vgs-chatbot-fix-head{background:${GOLD};color:#111;padding:15px 16px;display:flex;align-items:center;justify-content:space-between}
-      #vgs-chatbot-fix-head strong{display:block;font-size:16px}.vgs-fix-status{font-size:11px;margin-top:3px;opacity:.8}
-      #vgs-chatbot-fix-close{border:0;background:transparent;color:#111;font-size:24px;cursor:pointer}
-      #vgs-chatbot-fix-messages{flex:1;overflow-y:auto;padding:16px;background:#101010}
-      .vgs-fix-msg{max-width:86%;padding:11px 13px;border-radius:15px;margin:0 0 10px;line-height:1.45;font-size:14px;white-space:pre-wrap}.vgs-fix-msg.bot{background:#222;border:1px solid rgba(212,175,55,.25);border-bottom-left-radius:5px}.vgs-fix-msg.user{margin-left:auto;background:${GOLD};color:#111;border-bottom-right-radius:5px}
-      .vgs-fix-typing{display:inline-flex;gap:4px;align-items:center}.vgs-fix-typing i{width:6px;height:6px;border-radius:50%;background:${GOLD};display:block;animation:vgsTyping 1s infinite}.vgs-fix-typing i:nth-child(2){animation-delay:.15s}.vgs-fix-typing i:nth-child(3){animation-delay:.3s}@keyframes vgsTyping{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
-      #vgs-chatbot-fix-quick{display:flex;gap:7px;overflow-x:auto;padding:9px 12px;border-top:1px solid #292929;background:#151515}.vgs-fix-quick{white-space:nowrap;border:1px solid ${GOLD};background:#1d1d1d;color:#fff;border-radius:999px;padding:8px 11px;font-size:12px;cursor:pointer}
-      #vgs-chatbot-fix-form{display:flex;gap:8px;padding:10px;border-top:1px solid #292929;background:#151515}#vgs-chatbot-fix-input{flex:1;min-width:0;resize:none;height:44px;padding:11px;border-radius:12px;border:1px solid #555;background:#202020;color:#fff;font:inherit;box-sizing:border-box}#vgs-chatbot-fix-send{width:48px;border:0;border-radius:12px;background:${GOLD};color:#111;font-size:18px;font-weight:800;cursor:pointer}#vgs-chatbot-fix-send:disabled{opacity:.45;cursor:not-allowed}
-      #vgs-chatbot-fix-toggle{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border:0;border-radius:50%;background:${GOLD};color:#111;font-size:25px;z-index:100004;cursor:pointer;box-shadow:0 10px 28px rgba(212,175,55,.4)}
-      .vgs-fix-summary{background:#1b1b1b;border:1px solid rgba(212,175,55,.4);border-radius:12px;padding:12px;line-height:1.5}.vgs-fix-summary b{color:${GOLD}}
-      .vgs-fix-action{width:100%;border:1px solid ${GOLD};background:#1d1d1d;color:#fff;border-radius:10px;padding:11px 13px;margin-top:8px;cursor:pointer}.vgs-fix-action:hover{background:${GOLD};color:#111}
-      @media(max-width:600px){#vgs-chatbot-fix{right:8px;bottom:8px;width:calc(100vw - 16px);height:calc(100vh - 16px);border-radius:18px}}
-    `;
-    document.head.appendChild(style);
+  const answer=async raw=>{const text=cleanValue(raw);if(!text||busy)return;busy=true;const input=document.getElementById('vgs-chatbot-fix-input'),send=document.getElementById('vgs-chatbot-fix-send');if(input)input.value='';if(send)send.disabled=true;addMessage(text,'user');const lower=text.toLowerCase();if(/^(hi|hello|hey|good morning|good afternoon|good evening)[!.,\s]*$/i.test(text)){typing(true);await sleep(500);typing(false);addMessage(intro());busy=false;if(send)send.disabled=false;return;}
+    const detected=detectService(text);
+    if(detected&&detected!==state.service){state={...defaultState(),service:detected,answers:{}};}
+    else if(detected){state.service=detected;}
+    Object.assign(state.answers,extractAnswers(text));
+
+    // If the client simply answered our last question, remember that answer even
+    // when it did not contain a keyword such as “style:” or “budget:”.
+    if(state.lastField&&!state.answers[state.lastField]&&!detected){state.answers[state.lastField]=text;}
+
+    if(/\b(start a new project|new project|start over|reset)\b/i.test(lower)){reset();busy=false;if(send)send.disabled=false;return;}
+    if(!state.service){typing(true);await sleep(650);typing(false);addMessage('I can do that. 😊 What are we creating — a logo, website, mobile app, brand identity, video, photo editing, printing, or something custom?');busy=false;if(send)send.disabled=false;return;}
+    if(/\b(human|person|designer|staff|team|agent)\b/i.test(lower)&&/support|help|talk|speak/i.test(lower)){await refreshPresence();typing(true);await sleep(450);typing(false);addMessage(online?'🟢 A VGS team member is online. I’ll keep your brief here while you request human support.':'🤖 The team is away right now, so I’ll keep collecting the brief. Nothing gets lost, and VGS can review it when they’re back.');}
+    else if(/\b(services|what do you offer|what can you do)\b/i.test(lower)){typing(true);await sleep(550);typing(false);addMessage('We can help with 🎨 Logo Design, 🌐 Website Design, 📱 Mobile App, ✨ Brand Identity, 🎬 Video Editing, 📸 Photo Editing and 🖨️ Printing. Tell me what you have in mind and I’ll guide you from there.');}
+    else if(/\b(price|pricing|cost|how much|quote)\b/i.test(lower)&&!state.answers.budget){typing(true);await sleep(550);typing(false);const prices=packagePrices[state.service]||packagePrices.Other;addMessage(`For ${state.service}, our starting guide is Basic ${money(prices.Basic)}, Standard ${money(prices.Standard)}, and Premium ${money(prices.Premium)}. Final pricing depends on the scope. I’ll keep building your brief so we can recommend the right level.`);}
+    else if(!finishIfReady()){const next=missingField();typing(true);await sleep(500+Math.floor(Math.random()*350));typing(false);addMessage(next?next[1]:'What else would you like me to know about the project?');if(next){state.lastField=next[0];saveState(state);}}
+    busy=false;if(send)send.disabled=false;
   };
 
-  const renderHistory = () => {
-    const box = document.getElementById('vgs-chatbot-fix-messages');
-    if (!box) return;
-    box.innerHTML = '';
-    history.forEach(item => addMessage(item.text, item.who, false));
-  };
-
-  const addMessage = (text, who = 'bot', persist = true) => {
-    const box = document.getElementById('vgs-chatbot-fix-messages');
-    if (!box) return;
-    const el = document.createElement('div');
-    el.className = `vgs-fix-msg ${who}`;
-    el.textContent = text;
-    box.appendChild(el);
-    box.scrollTop = box.scrollHeight;
-    if (persist) { history.push({ who, text }); saveChat(history); }
-  };
-
-  const typing = show => {
-    const box = document.getElementById('vgs-chatbot-fix-messages');
-    if (!box) return;
-    const old = document.getElementById('vgs-fix-typing');
-    if (show && !old) {
-      const el = document.createElement('div'); el.id='vgs-fix-typing'; el.className='vgs-fix-msg bot'; el.innerHTML='<span class="vgs-fix-typing"><i></i><i></i><i></i></span>';
-      box.appendChild(el); box.scrollTop=box.scrollHeight;
-    } else if (!show && old) old.remove();
-  };
-
-  const refreshPresence = async () => {
-    try {
-      const api = await import('./vgs-presence.js?v=2');
-      const result = await Promise.race([
-        api.getVgsTeamAvailability(),
-        sleep(1800).then(() => ({ online: false, timeout: true }))
-      ]);
-      online = !!result.online;
-    } catch (_) { online = false; }
-    const status = document.getElementById('vgs-chatbot-fix-status');
-    if (status) status.textContent = online ? '🟢 A VGS team member is online' : '🤖 Team away • AI is handling clients';
-  };
-
-  const detectService = text => {
-    const lower = text.toLowerCase();
-    const names = Object.keys(services).filter(s => s !== 'Other');
-    const exact = names.find(s => lower.includes(s.toLowerCase()));
-    if (exact) return exact;
-    for (const name of names) {
-      if ((services[name].aliases || []).some(alias => lower.includes(alias))) return name;
-    }
-    return '';
-  };
-
-  const cleanValue = value => String(value || '').replace(/^[\s,:-]+|[\s.,!?]+$/g, '').trim();
-
-  const extractAnswers = text => {
-    const found = {};
-    const patterns = {
-      brand: /(?:brand|business)(?: name)?\s*(?:is|=|:)?\s*([^,.;\n]+)/i,
-      business: /(?:business|company)(?: name)?\s*(?:is|=|:)?\s*([^,.;\n]+)/i,
-      style: /(?:style|look|vibe)\s*(?:is|=|:)?\s*([^,.;\n]+)/i,
-      colors: /colou?rs?\s*(?:are|is|=|:)?\s*([^.;\n]+)/i,
-      goal: /(?:communicate|message|feel|meaning)\s*(?:is|should be|=|:)?\s*([^.;\n]+)/i,
-      audience: /(?:target audience|audience|customers?|clients?)\s*(?:are|is|=|:)?\s*([^.;\n]+)/i,
-      deadline: /(?:deadline|due|by|before)\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      budget: /(?:budget|spend|worth)\s*(?:is|=|:)?\s*(₦?\s*[\d,]+(?:\.\d+)?|[\d,]+(?:\.\d+)?\s*(?:naira|ngn|k)?)/i,
-      pages: /(?:pages?)\s*(?:are|include|=|:)?\s*([^.;\n]+)/i,
-      features: /(?:features?|functions?)\s*(?:are|include|need|=|:)?\s*([^.;\n]+)/i,
-      platform: /(?:platform|android|iphone|ios)\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      materials: /(?:materials?|brand materials?)\s*(?:are|include|need|=|:)?\s*([^.;\n]+)/i,
-      industry: /(?:industry|business type)\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      videoType: /(?:video type|type of video)\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      duration: /(?:duration|length)\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      footage: /(?:footage|assets?)\s*(?:is|are|=|:)?\s*([^.;\n]+)/i,
-      quantity: /(?:quantity|number|how many)\s*(?:is|are|=|:)?\s*([^.;\n]+)/i,
-      editing: /(?:editing|edit(?:ing)? type)\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      references: /(?:references?|examples?)\s*(?:are|include|=|:)?\s*([^.;\n]+)/i,
-      item: /(?:print|printing)\s*(?:item)?\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      size: /(?:size|dimensions?)\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      material: /(?:paper|material)\s*(?:is|=|:)?\s*([^.;\n]+)/i,
-      app: /(?:app)\s*(?:should|will)\s*([^.;\n]+)/i
-    };
-    Object.entries(patterns).forEach(([key, regex]) => { const match = text.match(regex); if (match?.[1]) found[key] = cleanValue(match[1]); });
-
-    const nameMatch = text.match(/(?:my name is|i am|i'm|name is)\s+([^,.;\n]+)/i);
-    if (nameMatch) found.name = cleanValue(nameMatch[1]);
-    const calledMatch = text.match(/(?:called|named)\s+([^,.;\n]+)/i);
-    if (calledMatch && !found.brand && !found.business) found.brand = cleanValue(calledMatch[1]);
-
-    const colors = text.match(/\b(black|white|gold|yellow|red|blue|green|purple|orange|pink|silver|brown|grey|gray)(?:\s*(?:and|,|&|\/ )\s*(black|white|gold|yellow|red|blue|green|purple|orange|pink|silver|brown|grey|gray))+/i);
-    if (colors && !found.colors) found.colors = cleanValue(colors[0]);
-    return found;
-  };
-
-  const currentFields = () => (services[state.service] || services.Other).fields;
-  const missingField = () => currentFields().find(([key]) => !state.answers[key]);
-
-  const intro = () => {
-    if (state.service && Object.keys(state.answers).length) {
-      const known = Object.values(state.answers).filter(Boolean).slice(0,2).join(' and ');
-      return `Welcome back 👋🏽 I still have your ${state.service} brief. We already captured ${known}. I won’t ask you for those again.`;
-    }
-    return `Welcome to Vitch Graphic Studio! 👋🏽\n\nI’m your AI receptionist. Tell me what you want to create in your own words — you don’t have to follow a form. I’ll remember what you tell me and only ask for the details we still need.`;
-  };
-
-  const summary = () => {
-    const lines = Object.entries(state.answers).filter(([,v]) => v).map(([k,v]) => `${k}: ${v}`);
-    const pkg = state.service && packagePrices[state.service] ? `\nPackage guide: Basic ${money(packagePrices[state.service].Basic)}, Standard ${money(packagePrices[state.service].Standard)}, Premium ${money(packagePrices[state.service].Premium)}` : '';
-    return `Here’s the brief I’ve built so far:\n\nService: ${state.service}\n${lines.join('\n')}${pkg}`;
-  };
-
-  const finishIfReady = () => {
-    const missing = missingField();
-    if (missing) return false;
-    state.complete = true; saveState(state);
-    addMessage(`${summary()}\n\nThat’s enough for a solid first brief. 🎯 I can send this to VGS for review now. Would you like me to send it?`, 'bot');
-    addActionButtons();
-    return true;
-  };
-
-  const addActionButtons = () => {
-    const box = document.getElementById('vgs-chatbot-fix-messages');
-    if (!box || document.getElementById('vgs-fix-actions')) return;
-    const wrap = document.createElement('div'); wrap.id='vgs-fix-actions';
-    wrap.innerHTML = `<button class="vgs-fix-action" data-vgs-action="send">📩 Send brief to VGS</button><button class="vgs-fix-action" data-vgs-action="edit">✏️ Keep chatting / add details</button><button class="vgs-fix-action" data-vgs-action="reset">🔄 Start a new project</button>`;
-    box.appendChild(wrap); box.scrollTop=box.scrollHeight;
-  };
-
-  const whatsapp = () => {
-    const lines = Object.entries(state.answers).filter(([,v]) => v).map(([k,v]) => `*${k}:* ${v}`).join('\n');
-    const text = `Hello Vitch Graphic Studio 👋\n\n*New project brief*\n\n*Service:* ${state.service}\n${lines}\n\nPlease review and let me know the next step.`;
-    window.open(`https://wa.me/2348083336746?text=${encodeURIComponent(text)}`, '_blank');
-  };
-
-  const reset = () => {
-    state = defaultState(); history = []; saveState(state); saveChat(history);
-    const box = document.getElementById('vgs-chatbot-fix-messages'); if (box) box.innerHTML='';
-    addMessage(intro());
-    addMessage('What would you like to create today?');
-  };
-
-  const answer = async raw => {
-    const text = cleanValue(raw);
-    if (!text || busy) return;
-    busy = true;
-    const input = document.getElementById('vgs-chatbot-fix-input');
-    const send = document.getElementById('vgs-chatbot-fix-send');
-    if (input) input.value=''; if (send) send.disabled=true;
-    addMessage(text, 'user');
-
-    const lower = text.toLowerCase();
-    if (/^(hi|hello|hey|good morning|good afternoon|good evening)[!.,\s]*$/i.test(text)) {
-      typing(true); await sleep(500); typing(false); addMessage(intro());
-      busy=false; if(send)send.disabled=false; return;
-    }
-
-    const detected = detectService(text);
-    if (detected) state.service = detected;
-    Object.assign(state.answers, extractAnswers(text));
-    if (!state.service) {
-      typing(true); await sleep(650); typing(false);
-      addMessage(`I can do that. 😊 What are we creating — a logo, website, mobile app, brand identity, video, photo editing, printing, or something custom?`);
-      busy=false; if(send)send.disabled=false; return;
-    }
-
-    if (/\b(human|person|designer|staff|team|agent)\b/i.test(lower) && /support|help|talk|speak/i.test(lower)) {
-      await refreshPresence(); typing(true); await sleep(450); typing(false);
-      addMessage(online ? '🟢 A VGS team member is online. I’ll keep your brief here while you request human support.' : '🤖 The team is away right now, so I’ll keep collecting the brief. Nothing gets lost, and VGS can review it when they’re back.');
-    } else if (/\b(services|what do you offer|what can you do)\b/i.test(lower)) {
-      typing(true); await sleep(550); typing(false);
-      addMessage('We can help with 🎨 Logo Design, 🌐 Website Design, 📱 Mobile App, ✨ Brand Identity, 🎬 Video Editing, 📸 Photo Editing and 🖨️ Printing. Tell me what you have in mind and I’ll guide you from there.');
-    } else if (/\b(price|pricing|cost|how much|quote)\b/i.test(lower) && !state.answers.budget) {
-      typing(true); await sleep(550); typing(false);
-      const prices = packagePrices[state.service] || packagePrices.Other;
-      addMessage(`For ${state.service}, our starting guide is Basic ${money(prices.Basic)}, Standard ${money(prices.Standard)}, and Premium ${money(prices.Premium)}. Final pricing depends on the scope. I’ll keep building your brief so we can recommend the right level.`);
-    } else if (!finishIfReady()) {
-      const next = missingField();
-      typing(true); await sleep(500 + Math.floor(Math.random()*350)); typing(false);
-      addMessage(next ? next[1] : 'What else would you like me to know about the project?');
-      if (next) { state.lastField = next[0]; saveState(state); }
-    }
-
-    busy=false; if(send)send.disabled=false;
-  };
-
-  const build = () => {
-    styles();
-    document.getElementById('vgs-chatbot')?.remove();
-    document.getElementById('vgs-chatbot-toggle')?.remove();
-    document.getElementById('ai-chat')?.remove();
-    document.getElementById('ai-toggle')?.remove();
-    document.getElementById('vgs-chatbot-fix')?.remove();
-    document.getElementById('vgs-chatbot-fix-toggle')?.remove();
-
-    const chat = document.createElement('section');
-    chat.id='vgs-chatbot-fix';
-    chat.innerHTML=`<div id="vgs-chatbot-fix-head"><div><strong>🤖 VGS AI Receptionist</strong><div id="vgs-chatbot-fix-status" class="vgs-fix-status">🤖 Team status checking…</div></div><button id="vgs-chatbot-fix-close" type="button">×</button></div><div id="vgs-chatbot-fix-messages"></div><div id="vgs-chatbot-fix-quick"><button class="vgs-fix-quick" data-vgs-fix="What services do you offer?">Services</button><button class="vgs-fix-quick" data-vgs-fix="How much does it cost?">Pricing</button><button class="vgs-fix-quick" data-vgs-fix="I want human support">Human support</button><button class="vgs-fix-quick" data-vgs-fix="I want to start a new project">New project</button></div><form id="vgs-chatbot-fix-form"><textarea id="vgs-chatbot-fix-input" placeholder="Type naturally…"></textarea><button id="vgs-chatbot-fix-send" type="submit">➤</button></form>`;
-    document.body.appendChild(chat);
-
-    const toggle=document.createElement('button'); toggle.id='vgs-chatbot-fix-toggle'; toggle.type='button'; toggle.textContent='🤖'; document.body.appendChild(toggle);
-
-    const open=async()=>{chat.classList.add('open');toggle.style.display='none';await refreshPresence();if(!history.length){addMessage(intro());addMessage('What would you like to create today?');}else renderHistory();};
-    toggle.onclick=open;
-    document.getElementById('vgs-chatbot-fix-close').onclick=()=>{chat.classList.remove('open');toggle.style.display='block';};
-    document.getElementById('vgs-chatbot-fix-form').addEventListener('submit',e=>{e.preventDefault();answer(document.getElementById('vgs-chatbot-fix-input').value);});
-    document.getElementById('vgs-chatbot-fix-input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();answer(e.target.value);}});
-    document.getElementById('vgs-chatbot-fix-quick').addEventListener('click',e=>{const b=e.target.closest('[data-vgs-fix]');if(b)answer(b.dataset.vgsFix);});
-    chat.addEventListener('click',e=>{const b=e.target.closest('[data-vgs-action]');if(!b)return;if(b.dataset.vgsAction==='send')whatsapp();if(b.dataset.vgsAction==='reset')reset();if(b.dataset.vgsAction==='edit'){document.getElementById('vgs-chatbot-fix-input')?.focus();}});
-    refreshPresence();
-    setInterval(refreshPresence,30000);
-  };
-
+  const build=()=>{styles();document.getElementById('vgs-chatbot')?.remove();document.getElementById('vgs-chatbot-toggle')?.remove();document.getElementById('ai-chat')?.remove();document.getElementById('ai-toggle')?.remove();document.getElementById('vgs-chatbot-fix')?.remove();document.getElementById('vgs-chatbot-fix-toggle')?.remove();const chat=document.createElement('section');chat.id='vgs-chatbot-fix';chat.innerHTML='<div id="vgs-chatbot-fix-head"><div><strong>🤖 VGS AI Receptionist</strong><div id="vgs-chatbot-fix-status" class="vgs-fix-status">🤖 Team status checking…</div></div><button id="vgs-chatbot-fix-close" type="button">×</button></div><div id="vgs-chatbot-fix-messages"></div><div id="vgs-chatbot-fix-quick"><button class="vgs-fix-quick" data-vgs-fix="What services do you offer?">Services</button><button class="vgs-fix-quick" data-vgs-fix="How much does it cost?">Pricing</button><button class="vgs-fix-quick" data-vgs-fix="I want human support">Human support</button><button class="vgs-fix-quick" data-vgs-fix="I want to start a new project">New project</button></div><form id="vgs-chatbot-fix-form"><textarea id="vgs-chatbot-fix-input" placeholder="Type naturally…"></textarea><button id="vgs-chatbot-fix-send" type="submit">➤</button></form>';document.body.appendChild(chat);const toggle=document.createElement('button');toggle.id='vgs-chatbot-fix-toggle';toggle.type='button';toggle.textContent='🤖';document.body.appendChild(toggle);const open=async()=>{chat.classList.add('open');toggle.style.display='none';await refreshPresence();if(!history.length){addMessage(intro());addMessage('What would you like to create today?');}else renderHistory();};toggle.onclick=open;document.getElementById('vgs-chatbot-fix-close').onclick=()=>{chat.classList.remove('open');toggle.style.display='block';};document.getElementById('vgs-chatbot-fix-form').addEventListener('submit',e=>{e.preventDefault();answer(document.getElementById('vgs-chatbot-fix-input').value);});document.getElementById('vgs-chatbot-fix-input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();answer(e.target.value);}});document.getElementById('vgs-chatbot-fix-quick').addEventListener('click',e=>{const b=e.target.closest('[data-vgs-fix]');if(b)answer(b.dataset.vgsFix);});chat.addEventListener('click',e=>{const b=e.target.closest('[data-vgs-action]');if(!b)return;if(b.dataset.vgsAction==='send')whatsapp();if(b.dataset.vgsAction==='reset')reset();if(b.dataset.vgsAction==='edit')document.getElementById('vgs-chatbot-fix-input')?.focus();});refreshPresence();setInterval(refreshPresence,30000);};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build,{once:true});else build();
 })();
