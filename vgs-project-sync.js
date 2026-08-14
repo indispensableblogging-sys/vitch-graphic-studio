@@ -50,16 +50,7 @@
       const deadline = dateFromDeadline(answers.deadline);
       const { data: existing } = await supabase.from('bookings').select('id').eq('client_id', user.id).eq('project_title', title).eq('service', service).eq('description', description).limit(1);
       if (!existing?.length) {
-        const { error } = await supabase.from('bookings').insert({
-          client_id: user.id,
-          service,
-          project_title: title,
-          description,
-          budget,
-          currency: 'NGN',
-          deadline,
-          status: 'pending'
-        });
+        const { error } = await supabase.from('bookings').insert({ client_id: user.id, service, project_title: title, description, budget, currency: 'NGN', deadline, status: 'pending' });
         if (error) throw error;
       }
       try { localStorage.setItem('vgs_brief_sent_v4', JSON.stringify({ sentAt: new Date().toISOString(), title, service })); } catch (_) {}
@@ -83,22 +74,20 @@
       if (!user) return;
       const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
       if (profile?.role !== 'admin') return;
-      const { data: bookings, error: bErr } = await supabase.from('bookings').select('id,client_id,service,project_title,description,budget,currency,deadline,status').order('created_at',{ascending:false}).limit(50);
+      const { data: bookings, error: bErr } = await supabase.from('bookings').select('id,client_id,service,project_title,description,status').order('created_at',{ascending:false}).limit(50);
       if (bErr) throw bErr;
       for (const b of (bookings || [])) {
         if (b.status === 'cancelled') continue;
-        const { data: found } = await supabase.from('projects').select('id').eq('client_id', b.client_id).eq('title', b.project_title).eq('service', b.service).limit(1);
+        const { data: found, error: findErr } = await supabase.from('projects').select('id').eq('client_id', b.client_id).eq('title', b.project_title).eq('service', b.service).limit(1);
+        if (findErr) { console.warn('Could not check project', b.id, findErr.message); continue; }
         if (found?.length) continue;
+        const projectStatus = b.status === 'completed' ? 'completed' : b.status === 'in_progress' ? 'in_progress' : b.status === 'reviewing' ? 'reviewing' : 'pending';
         const { error } = await supabase.from('projects').insert({
           client_id: b.client_id,
           title: b.project_title,
           service: b.service,
-          description: b.description,
-          status: b.status === 'completed' ? 'completed' : b.status === 'in_progress' ? 'in_progress' : 'pending',
-          progress: b.status === 'completed' ? 100 : 0,
-          budget: b.budget,
-          currency: b.currency || 'NGN',
-          deadline: b.deadline
+          status: projectStatus,
+          progress: b.status === 'completed' ? 100 : 0
         });
         if (error) console.warn('Could not create project from booking', b.id, error.message);
       }
