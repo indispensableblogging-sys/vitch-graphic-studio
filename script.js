@@ -8,82 +8,26 @@ if (menuToggle && navbar) {
 }
 
 const reveals = document.querySelectorAll(".reveal");
-
 function revealSections() {
     reveals.forEach((section) => {
         const windowHeight = window.innerHeight;
         const sectionTop = section.getBoundingClientRect().top;
-        const revealPoint = 100;
-
-        if (sectionTop < windowHeight - revealPoint) {
-            section.classList.add("active");
-        }
+        if (sectionTop < windowHeight - 100) section.classList.add("active");
     });
 }
-
 window.addEventListener("scroll", revealSections);
 window.addEventListener("load", revealSections);
 
 const currency = document.getElementById("currency");
 const prices = document.querySelectorAll(".price");
-
 if (currency) {
     currency.addEventListener("change", function () {
-        if (this.value === "NGN") {
-            prices[0].innerHTML = "₦5,000";
-            prices[1].innerHTML = "₦15,000";
-            prices[2].innerHTML = "₦35,000";
-        }
-        if (this.value === "USD") {
-            prices[0].innerHTML = "$10";
-            prices[1].innerHTML = "$25";
-            prices[2].innerHTML = "$60";
-        }
-        if (this.value === "SLL") {
-            prices[0].innerHTML = "Le 230";
-            prices[1].innerHTML = "Le 690";
-            prices[2].innerHTML = "Le 1,610";
-        }
-        if (this.value === "GHS") {
-            prices[0].innerHTML = "GH₵105";
-            prices[1].innerHTML = "GH₵260";
-            prices[2].innerHTML = "GH₵620";
-        }
-        if (this.value === "KES") {
-            prices[0].innerHTML = "KSh 1,300";
-            prices[1].innerHTML = "KSh 3,900";
-            prices[2].innerHTML = "KSh 9,100";
-        }
-        if (this.value === "ZAR") {
-            prices[0].innerHTML = "R170";
-            prices[1].innerHTML = "R510";
-            prices[2].innerHTML = "R1,190";
-        }
-        if (this.value === "EUR") {
-            prices[0].innerHTML = "€9";
-            prices[1].innerHTML = "€27";
-            prices[2].innerHTML = "€63";
-        }
-        if (this.value === "GBP") {
-            prices[0].innerHTML = "£8";
-            prices[1].innerHTML = "£22";
-            prices[2].innerHTML = "£55";
-        }
-        if (this.value === "CAD") {
-            prices[0].innerHTML = "CA$14";
-            prices[1].innerHTML = "CA$35";
-            prices[2].innerHTML = "CA$84";
-        }
-        if (this.value === "AUD") {
-            prices[0].innerHTML = "A$15";
-            prices[1].innerHTML = "A$38";
-            prices[2].innerHTML = "A$90";
-        }
-        if (this.value === "AED") {
-            prices[0].innerHTML = "AED 37";
-            prices[1].innerHTML = "AED 92";
-            prices[2].innerHTML = "AED 220";
-        }
+        const values = {
+            NGN:["₦5,000","₦15,000","₦35,000"], USD:["$10","$25","$60"], SLL:["Le 230","Le 690","Le 1,610"],
+            GHS:["GH₵105","GH₵260","GH₵620"], KES:["KSh 1,300","KSh 3,900","KSh 9,100"], ZAR:["R170","R510","R1,190"],
+            EUR:["€9","€27","€63"], GBP:["£8","£22","£55"], CAD:["CA$14","CA$35","CA$84"], AUD:["A$15","A$38","A$90"], AED:["AED 37","AED 92","AED 220"]
+        };
+        (values[this.value] || []).forEach((v,i)=>{ if(prices[i]) prices[i].innerHTML=v; });
     });
 }
 
@@ -109,12 +53,10 @@ counters.forEach(counter => {
         if (current < target) {
             counter.innerText = current + increment;
             setTimeout(updateCounter, 20);
-        } else {
-            counter.innerText = target + "+";
-        }
+        } else counter.innerText = target + "+";
     };
     updateCounter();
-});
+}
 
 const hideVgsPreloader = () => {
     const preloader = document.getElementById("preloader");
@@ -125,22 +67,17 @@ const hideVgsPreloader = () => {
         preloader.style.pointerEvents = "none";
     }, 900);
 };
-
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", hideVgsPreloader, { once: true });
-} else {
-    hideVgsPreloader();
-}
-
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", hideVgsPreloader, { once: true });
+else hideVgsPreloader();
 setTimeout(() => {
     const preloader = document.getElementById("preloader");
-    if (preloader) {
-        preloader.style.opacity = "0";
-        preloader.style.visibility = "hidden";
-        preloader.style.pointerEvents = "none";
-    }
+    if (preloader) { preloader.style.opacity="0"; preloader.style.visibility="hidden"; preloader.style.pointerEvents="none"; }
 }, 5000);
 
+// Keep the existing quote assistant available on the site, but load the fixed
+// client receptionist last with a fresh cache-busting version. The receptionist
+// removes the old assistant UI before creating its own chat, so only one responder
+// can handle each client message.
 const vgsAiLoader = document.createElement("script");
 vgsAiLoader.src = "ai-assistant.js?v=6";
 vgsAiLoader.defer = true;
@@ -176,6 +113,6 @@ document.head.appendChild(vgsAiPresenceLoader);
 
 const vgsChatbotLoader = document.createElement("script");
 vgsChatbotLoader.type = "module";
-vgsChatbotLoader.src = "vgs-chatbot-fix.js?v=1";
+vgsChatbotLoader.src = "vgs-chatbot-fix.js?v=2";
 vgsChatbotLoader.defer = true;
 document.head.appendChild(vgsChatbotLoader);
