@@ -176,6 +176,6 @@ document.head.appendChild(vgsAiPresenceLoader);
 
 const vgsChatbotLoader = document.createElement("script");
 vgsChatbotLoader.type = "module";
-vgsChatbotLoader.src = "vgs-chatbot.js?v=1";
+vgsChatbotLoader.src = "vgs-chatbot-fix.js?v=1";
 vgsChatbotLoader.defer = true;
 document.head.appendChild(vgsChatbotLoader);
