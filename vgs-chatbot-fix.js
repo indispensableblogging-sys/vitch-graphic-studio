@@ -1,0 +1,1 @@
+// Temporary VGS chatbot fix. Loaded by the client dashboard to replace the repeating greeting behavior.
