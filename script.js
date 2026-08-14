@@ -37,7 +37,7 @@ const isDashboard=/dashboard\.html$/.test(location.pathname);
 // duplicate listeners and the repeating-reply problem.
 if(isDashboard){
   loadVgsScript("vgs-auth.js?v=13","module");
-  loadVgsScript("vgs-chatbot-fix.js?v=4","text/javascript");
+  loadVgsScript("vgs-receptionist-v4.js?v=1","text/javascript");
 }else{
   loadVgsScript("ai-assistant.js?v=7");
   loadVgsScript("ai-fix.js?v=4");
