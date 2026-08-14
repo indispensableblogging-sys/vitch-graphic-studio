@@ -173,3 +173,9 @@ vgsAiPresenceLoader.type = "module";
 vgsAiPresenceLoader.src = "vgs-ai-presence.js?v=1";
 vgsAiPresenceLoader.defer = true;
 document.head.appendChild(vgsAiPresenceLoader);
+
+const vgsChatbotLoader = document.createElement("script");
+vgsChatbotLoader.type = "module";
+vgsChatbotLoader.src = "vgs-chatbot.js?v=1";
+vgsChatbotLoader.defer = true;
+document.head.appendChild(vgsChatbotLoader);
