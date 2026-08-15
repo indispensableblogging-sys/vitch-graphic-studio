@@ -17,7 +17,7 @@
   hideLegacy();
   new MutationObserver(hideLegacy).observe(document.documentElement,{childList:true,subtree:true});
 
-  fetch('vgs-receptionist-v4.js?v=1', { cache: 'no-store' })
+  fetch('vgs-receptionist-v4.js?v=3', { cache: 'no-store' })
     .then(r => r.text())
     .then(code => {
       const patched = code.replace(
