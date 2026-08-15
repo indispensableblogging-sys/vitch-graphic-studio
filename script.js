@@ -30,8 +30,8 @@ function loadVgsScript(src,type="text/javascript"){
   return s;
 }
 
-const isDashboard=/dashboard\.html$/.test(location.pathname);
-const isAdmin=/admin\.html$/.test(location.pathname);
+const isDashboard=/dashboard\\.html$/.test(location.pathname);
+const isAdmin=/admin\\.html$/.test(location.pathname);
 
 // One conversational receptionist on the client dashboard and the admin
 // dashboard. The legacy menu assistant is kept only for other public pages.
@@ -45,7 +45,7 @@ if(isDashboard){
   loadVgsScript("vgs-ai-presence.js?v=3","module");
   loadVgsScript("vgs-project-sync.js?v=2","text/javascript");
   loadVgsScript("vgs-invoice-manager.js?v=2","module");
-  loadVgsScript("vgs-admin-receptionist-bridge.js?v=2","text/javascript");
+  loadVgsScript("vgs-admin-receptionist-bridge.js?v=3","text/javascript");
 }else{
   loadVgsScript("ai-assistant.js?v=7");
   loadVgsScript("ai-fix.js?v=4");
@@ -54,3 +54,30 @@ if(isDashboard){
   loadVgsScript("vgs-presence.js?v=2","module");
   loadVgsScript("vgs-ai-presence.js?v=2","module");
 }
+
+// VGS mobile-app layer: install the existing site as a lightweight PWA.
+// This keeps the phone storage footprint small while giving VGS its own
+// home-screen icon and standalone app window.
+(() => {
+  const manifest = document.createElement("link");
+  manifest.rel = "manifest";
+  manifest.href = "/manifest.webmanifest?v=1";
+  document.head.appendChild(manifest);
+
+  const theme = document.createElement("meta");
+  theme.name = "theme-color";
+  theme.content = "#d9b22e";
+  document.head.appendChild(theme);
+
+  const appleIcon = document.createElement("link");
+  appleIcon.rel = "apple-touch-icon";
+  appleIcon.href = "/vgs-app-icon.svg";
+  document.head.appendChild(appleIcon);
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js", { scope: "/" })
+        .catch(error => console.warn("VGS app shell could not register", error));
+    }, { once: true });
+  }
+})();
