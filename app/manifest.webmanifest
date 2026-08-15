@@ -1,0 +1,13 @@
+{
+  "name": "Vitch Graphic Studio",
+  "short_name": "Vitch",
+  "start_url": "/vitch-graphic-studio/app/",
+  "scope": "/vitch-graphic-studio/app/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "description": "Vitch Graphic Studio client mobile app.",
+  "icons": [
+    {"src":"../vgs-app-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
