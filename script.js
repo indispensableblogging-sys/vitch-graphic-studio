@@ -91,6 +91,7 @@ if (isDashboard) {
     .vgs-bottom .vgs-nav { position:static !important; top:auto !important; right:auto !important; bottom:auto !important; left:auto !important; width:auto !important; height:100% !important; min-height:0 !important; display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; float:none !important; transform:none !important; margin:0 !important; padding:5px 2px !important; box-sizing:border-box !important; }
     .vgs-bottom .vgs-nav span { display:block !important; }
     .vgs-float { position:fixed !important; right:18px !important; bottom:88px !important; z-index:10000 !important; }
+    body #preloader { display:flex !important; position:fixed !important; inset:0 !important; z-index:20000 !important; }
   `;
   document.head.appendChild(dashboardStyle);
 
