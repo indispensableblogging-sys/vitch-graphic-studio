@@ -15,7 +15,6 @@ if(slider){let scrollAmount=0;setInterval(()=>{const firstCard=slider.querySelec
 const counters=document.querySelectorAll(".counter");
 counters.forEach(counter=>{const update=()=>{const target=+counter.getAttribute("data-target"),current=+counter.innerText,increment=Math.ceil(target/100);if(current<target){counter.innerText=current+increment;setTimeout(update,20);}else counter.innerText=target+"+";};update();});
 
-// Always fail open: a JavaScript error must never leave the preloader covering the page.
 function hideVgsPreloader(){const p=document.getElementById("preloader");if(!p)return;p.style.opacity="0";p.style.visibility="hidden";p.style.pointerEvents="none";p.style.display="none";}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",hideVgsPreloader,{once:true});else hideVgsPreloader();
 window.addEventListener("load",hideVgsPreloader,{once:true});
@@ -30,11 +29,9 @@ function loadVgsScript(src,type="text/javascript"){
   return s;
 }
 
-const isDashboard=/dashboard\\.html$/.test(location.pathname);
-const isAdmin=/admin\\.html$/.test(location.pathname);
+const isDashboard=/dashboard\.html$/.test(location.pathname);
+const isAdmin=/admin\.html$/.test(location.pathname);
 
-// One conversational receptionist on the client dashboard and the admin
-// dashboard. The legacy menu assistant is kept only for other public pages.
 if(isDashboard){
   loadVgsScript("vgs-auth.js?v=13","module");
   loadVgsScript("vgs-receptionist-v4.js?v=2","text/javascript");
@@ -56,12 +53,10 @@ if(isDashboard){
 }
 
 // VGS mobile-app layer: install the existing site as a lightweight PWA.
-// This keeps the phone storage footprint small while giving VGS its own
-// home-screen icon and standalone app window.
 (() => {
   const manifest = document.createElement("link");
   manifest.rel = "manifest";
-  manifest.href = "/manifest.webmanifest?v=1";
+  manifest.href = "/manifest.webmanifest?v=2";
   document.head.appendChild(manifest);
 
   const theme = document.createElement("meta");
