@@ -37,15 +37,15 @@ const isAdmin=/admin\.html$/.test(location.pathname);
 // dashboard. The legacy menu assistant is kept only for other public pages.
 if(isDashboard){
   loadVgsScript("vgs-auth.js?v=13","module");
-  loadVgsScript("vgs-receptionist-v4.js?v=1","text/javascript");
-  loadVgsScript("vgs-project-sync.js?v=1","text/javascript");
+  loadVgsScript("vgs-receptionist-v4.js?v=2","text/javascript");
+  loadVgsScript("vgs-project-sync.js?v=2","text/javascript");
 }else if(isAdmin){
   loadVgsScript("vgs-auth.js?v=13","module");
-  loadVgsScript("vgs-presence.js?v=2","module");
-  loadVgsScript("vgs-ai-presence.js?v=2","module");
-  loadVgsScript("vgs-project-sync.js?v=1","text/javascript");
-  loadVgsScript("vgs-invoice-manager.js?v=1","module");
-  loadVgsScript("vgs-admin-receptionist-bridge.js?v=1","text/javascript");
+  loadVgsScript("vgs-presence.js?v=3","module");
+  loadVgsScript("vgs-ai-presence.js?v=3","module");
+  loadVgsScript("vgs-project-sync.js?v=2","text/javascript");
+  loadVgsScript("vgs-invoice-manager.js?v=2","module");
+  loadVgsScript("vgs-admin-receptionist-bridge.js?v=2","text/javascript");
 }else{
   loadVgsScript("ai-assistant.js?v=7");
   loadVgsScript("ai-fix.js?v=4");
