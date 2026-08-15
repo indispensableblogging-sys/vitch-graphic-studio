@@ -1,0 +1,4 @@
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredPrompt=event;showInstallButton();});
+function showInstallButton(){if(document.getElementById('install-vgs'))return;const button=document.createElement('button');button.id='install-vgs';button.textContent='Install VGS App';button.className='gold-btn';button.style.cssText='position:fixed;right:14px;top:74px;z-index:45;border-radius:999px;padding:10px 14px;font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.35)';button.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;button.remove();});document.body.appendChild(button)}
+window.addEventListener('appinstalled',()=>document.getElementById('install-vgs')?.remove());
