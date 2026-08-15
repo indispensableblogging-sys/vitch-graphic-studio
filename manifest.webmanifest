@@ -1,0 +1,22 @@
+{
+  "id": "/",
+  "name": "Vitch Graphic Studio",
+  "short_name": "VGS",
+  "description": "Vitch Graphic Studio — creative services, bookings, projects, invoices and AI reception.",
+  "start_url": "/dashboard.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0b0b",
+  "theme_color": "#d9b22e",
+  "lang": "en",
+  "categories": ["business", "design", "productivity"],
+  "icons": [
+    {
+      "src": "/vgs-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
