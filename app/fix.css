@@ -1,0 +1,12 @@
+/* VGS mobile layout safety patch */
+html,body,#app-shell{width:100%;min-width:0;overflow-x:hidden}
+body{padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+.topbar{width:100%;position:sticky;left:0;right:0}
+#screen{display:block;width:100%;max-width:680px;margin:0 auto;padding-left:16px;padding-right:16px}
+.bottom-nav{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:100%!important;height:78px!important;min-height:78px!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;grid-auto-flow:row!important;flex-direction:row!important;align-items:stretch!important;justify-content:stretch!important;padding:0 0 env(safe-area-inset-bottom)!important;margin:0!important;transform:none!important;border-radius:0!important}
+.nav-item{width:auto!important;height:78px!important;min-width:0!important;min-height:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:6px 2px!important;margin:0!important;position:static!important;transform:none!important}
+.nav-item span,.nav-item small{display:block!important;position:static!important;transform:none!important}
+.toast{z-index:100!important}
+#install-vgs{z-index:95!important}
+#booking-modal{z-index:120!important}
+@media(max-width:599px){.screen{padding-top:18px}.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
