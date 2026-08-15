@@ -48,4 +48,5 @@ if(isDashboard){
   loadVgsScript("vgs-presence.js?v=2","module");
   loadVgsScript("vgs-ai-presence.js?v=2","module");
   if(isAdmin) loadVgsScript("vgs-project-sync.js?v=1","text/javascript");
+  if(isAdmin) loadVgsScript("vgs-invoice-manager.js?v=1","module");
 }
