@@ -76,3 +76,37 @@ if(isDashboard){
     }, { once: true });
   }
 })();
+
+// Client dashboard hardening: keep its navigation horizontal on mobile even if
+// the global website stylesheet contains generic mobile nav rules.
+if (isDashboard) {
+  const dashboardStyle = document.createElement("style");
+  dashboardStyle.id = "vgs-client-dashboard-runtime-fix";
+  dashboardStyle.textContent = `
+    html, body { width:100%; min-width:0; overflow-x:hidden; }
+    .vgs-app { width:100%; min-width:0; padding-bottom:92px !important; }
+    .vgs-main { width:100%; max-width:720px; margin:0 auto; }
+    .vgs-bottom { position:fixed !important; top:auto !important; right:0 !important; bottom:0 !important; left:0 !important; width:100% !important; height:78px !important; min-height:78px !important; display:flex !important; flex-direction:row !important; align-items:stretch !important; justify-content:center !important; margin:0 !important; padding:8px 12px calc(8px + env(safe-area-inset-bottom)) !important; box-sizing:border-box !important; border-radius:0 !important; z-index:9999 !important; }
+    .vgs-bottom-inner { width:100% !important; max-width:720px !important; height:100% !important; display:grid !important; grid-template-columns:repeat(5,minmax(0,1fr)) !important; gap:4px !important; margin:0 !important; padding:0 !important; }
+    .vgs-bottom .vgs-nav { position:static !important; top:auto !important; right:auto !important; bottom:auto !important; left:auto !important; width:auto !important; height:100% !important; min-height:0 !important; display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; float:none !important; transform:none !important; margin:0 !important; padding:5px 2px !important; box-sizing:border-box !important; }
+    .vgs-bottom .vgs-nav span { display:block !important; }
+    .vgs-float { position:fixed !important; right:18px !important; bottom:88px !important; z-index:10000 !important; }
+  `;
+  document.head.appendChild(dashboardStyle);
+
+  // Restore a lightweight VGS loading screen if the dashboard page no longer
+  // contains the original preloader markup.
+  if (!document.getElementById("preloader")) {
+    const preloader = document.createElement("div");
+    preloader.id = "preloader";
+    preloader.setAttribute("aria-label", "Loading Vitch Graphic Studio");
+    preloader.innerHTML = `<div style="width:72px;height:72px;border:3px solid rgba(217,178,46,.2);border-top-color:#d9b22e;border-radius:50%;animation:vgsSpin .8s linear infinite"></div><div style="margin-top:16px;color:#d9b22e;font-weight:700;letter-spacing:1px">VITCH GRAPHIC STUDIO</div>`;
+    preloader.style.cssText = "position:fixed;inset:0;z-index:20000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#050505;color:#fff;transition:opacity .35s ease,visibility .35s ease";
+    document.head.insertAdjacentHTML("beforeend", "<style>@keyframes vgsSpin{to{transform:rotate(360deg)}}</style>");
+    document.body.prepend(preloader);
+  }
+
+  // The dashboard's own data loader will be visible shortly; don't leave the
+  // fallback screen stuck on slow connections.
+  setTimeout(hideVgsPreloader, 2200);
+}
