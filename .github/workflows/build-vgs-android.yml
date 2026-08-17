@@ -1,0 +1,66 @@
+name: Build VGS Android App Bundle
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - android-play-release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Bubblewrap
+        run: npm install -g @bubblewrap/cli
+
+      - name: Generate Android project
+        run: |
+          mkdir -p android/generated
+          cd android/generated
+          bubblewrap update --manifest=../twa-manifest.json || bubblewrap init --manifest=../twa-manifest.json
+
+      - name: Set Google Play target API 36
+        working-directory: android/generated
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('app/build.gradle')
+          text = p.read_text()
+          text = text.replace('targetSdkVersion 35', 'targetSdkVersion 36')
+          p.write_text(text)
+          PY
+          grep -n "compileSdkVersion\|targetSdkVersion" app/build.gradle
+
+      - name: Validate TWA
+        run: |
+          cd android/generated
+          bubblewrap validate --url=https://indispensableblogging-sys.github.io/vitch-graphic-studio/app/manifest.webmanifest || true
+
+      - name: Build unsigned App Bundle for CI verification
+        working-directory: android/generated
+        run: bubblewrap build --skipSigning
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vgs-android-aab
+          path: android/generated/app-release-bundle.aab
+          if-no-files-found: error
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vgs-android-apk
+          path: android/generated/app-release-unsigned.apk
+          if-no-files-found: warn
