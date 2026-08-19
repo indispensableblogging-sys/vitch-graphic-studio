@@ -1,5 +1,6 @@
 name: Build VGS Android App Bundle
 
+# Release build workflow for the VGS Android client.
 on:
   workflow_dispatch:
   push:
