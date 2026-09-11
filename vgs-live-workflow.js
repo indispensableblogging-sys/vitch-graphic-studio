@@ -23,7 +23,27 @@
     })});
     observer.observe(document.documentElement,{childList:true,subtree:true});
   }
+  async function addWorkspaceShortcut(){
+    if(!client)return;
+    const supabase=await importAuth();
+    const host=document.querySelector('.hero-actions');
+    if(!host||document.getElementById('vw-workspace-shortcut'))return;
+    const a=document.createElement('a');
+    a.id='vw-workspace-shortcut';
+    a.className='btn';
+    a.href='project-workspace.html';
+    a.textContent='Project Workspace →';
+    host.insertBefore(a,host.firstChild);
+    try{
+      const {data:user}=await supabase.auth.getUser();
+      const id=user?.user?.id;
+      if(id){
+        const {data:projects}=await supabase.from('projects').select('id').eq('client_id',id).order('created_at',{ascending:false}).limit(1);
+        if(projects?.[0]?.id)a.href=`project-workspace.html?project_id=${encodeURIComponent(projects[0].id)}`;
+      }
+    }catch(e){console.warn('Workspace shortcut:',e)}
+  }
   function startClientRefresh(){setInterval(()=>{if(document.visibilityState==='hidden')return;const refresh=document.getElementById('refresh');if(refresh)refresh.click()},20000)}
   if(admin)wireAdminProjectUpdates();
-  if(client)startClientRefresh();
+  if(client){addWorkspaceShortcut();startClientRefresh();}
 })();
