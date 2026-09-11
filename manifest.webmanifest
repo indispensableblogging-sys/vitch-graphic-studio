@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Vitch Graphic Studio",
-  "short_name": "VGS",
-  "description": "Vitch Graphic Studio — creative services, bookings, projects, invoices and AI reception.",
+  "name": "VITCH WORKS",
+  "short_name": "VW",
+  "description": "VITCH WORKS — creative services, bookings, projects, invoices and AI reception.",
   "start_url": "/dashboard.html",
   "scope": "/",
   "display": "standalone",
