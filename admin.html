@@ -39,7 +39,7 @@ async function acceptBooking(booking,button){
  if(existingError){button.disabled=false;button.textContent='Accept';alert(`Could not check the project: ${existingError.message}`);return;}
  let projectId=existing?.[0]?.id||null;
  if(!projectId){
-   const {data:created,error:createError}=await supabase.from('projects').insert({client_id:booking.client_id,title:booking.project_title,service:booking.service,status:'active',progress:0,budget:booking.budget??null,currency:booking.currency||'NGN',deadline:booking.deadline||null}).select('id').single();
+   const {data:created,error:createError}=await supabase.from('projects').insert({client_id:booking.client_id,title:booking.project_title,service:booking.service,description:booking.description||'',status:'active',progress:0,budget:booking.budget??null,currency:booking.currency||'NGN',deadline:booking.deadline||null}).select('id').single();
    if(createError){button.disabled=false;button.textContent='Accept';alert(`Could not create the project: ${createError.message}`);return;}
    projectId=created?.id||null;
  }
