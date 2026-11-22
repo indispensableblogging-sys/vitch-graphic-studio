@@ -78,9 +78,8 @@ form.addEventListener('submit',async event=>{
  if(deadlineValue&&deadlineValue<new Date().toISOString().slice(0,10)){showStatus('Please choose a future deadline.','bad');return;}
  submit.disabled=true;submit.textContent='Submitting your brief…';showStatus('Saving your project brief securely…');
  try{
-  const {error:profileError}=await supabase.from('profiles').update({full_name:name,phone}).eq('id',signedInUser.id);
-  if(profileError)throw new Error('Your profile could not be updated: '+profileError.message);
-  const {error}=await supabase.from('bookings').insert({client_id:signedInUser.id,service,project_title:title,description:details,budget:budgetRaw?Number(budgetRaw):null,currency:'NGN',deadline:deadlineValue||null,status:'pending'});
+  const briefDescription=`Client name: ${name}\nWhatsApp: ${phone}\n\nProject details:\n${details}`;
+  const {error}=await supabase.from('bookings').insert({client_id:signedInUser.id,service,project_title:title,description:briefDescription,budget:budgetRaw?Number(budgetRaw):null,currency:'NGN',deadline:deadlineValue||null,status:'pending'});
   if(error)throw error;
   form.reset();document.getElementById('client-name').value=name;document.getElementById('client-phone').value=phone;
   showStatus('Your project brief has been submitted! The VITCH WORKS team can now review it. You can check its status from your client portal.','good');
