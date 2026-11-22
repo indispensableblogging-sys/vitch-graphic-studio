@@ -1,56 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Start a creative project with VITCH WORKS.">
-  <title>Start a Project — VITCH WORKS</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909"><meta name="description" content="Submit a project brief to VITCH WORKS from your secure client account.">
+<title>Start a Project — VITCH WORKS</title>
+<link rel="stylesheet" href="style.css?v=21">
+<style>
+:root{--gold:#e0b94f;--line:#302c23;--muted:#aaa69d}
+*{box-sizing:border-box}
+body{background:#090909;color:#f3f0e8;margin:0;font-family:'DM Sans',Arial,sans-serif}
+.project-shell{width:min(92%,1080px);margin:auto;padding:48px 0 80px}
+.project-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:start}
+.project-intro{position:sticky;top:110px}
+.project-intro h1{font:600 clamp(2.8rem,5vw,4.8rem)/.98 'Space Grotesk',sans-serif;letter-spacing:-.07em;margin:12px 0 20px}
+.project-intro h1 em{font-style:normal;color:var(--gold)}
+.project-intro>p:not(.eyebrow){color:var(--muted);font-size:.9rem}
+.project-points{display:grid;gap:13px;margin-top:32px;color:#c4bfb4;font-size:.8rem}
+.project-points span{color:var(--gold);font-weight:700;margin-right:10px}
+.project-form{background:#111;border:1px solid var(--line);padding:28px;display:grid;gap:16px}
+.project-form label{display:grid;gap:7px;color:#d8c99f;font-size:.75rem;font-weight:700}
+.project-form input,.project-form select,.project-form textarea{width:100%;background:#090909;color:#f3f0e8;border:1px solid #39352b;border-radius:8px;padding:13px;font:400 .85rem 'DM Sans',sans-serif;min-width:0}
+.project-form textarea{min-height:145px;resize:vertical}
+.project-form input:focus,.project-form select:focus,.project-form textarea:focus{outline:1px solid var(--gold);border-color:var(--gold)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-note,.form-status{font-size:.72rem;color:#999;line-height:1.5}
+.form-status{padding:12px;border:1px solid #3b3425;background:#17140e;display:none}
+.form-status.show{display:block}
+.form-status.good{border-color:#285b3b;color:#9ce3b4}
+.form-status.bad{border-color:#6b3430;color:#ffaaa4}
+.project-form button:disabled{opacity:.6;cursor:wait}
+@media(max-width:720px){.project-shell{padding:35px 0 55px}.project-layout{grid-template-columns:1fr;gap:28px}.project-intro{position:static}.project-intro h1{font-size:3.2rem}.project-form{padding:20px}.form-row{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="wordmark" href="index.html">VITCH <span>WORKS</span></a>
-      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation" aria-controls="navbar" aria-expanded="false">☰</button>
-      <nav id="navbar" class="nav-menu" aria-label="Primary navigation">
-        <a href="index.html">Home</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="index.html#about">About</a><a href="index.html#pricing">Pricing</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="section project-section">
-      <div class="container project-layout">
-        <div class="project-intro">
-          <p class="eyebrow">START A PROJECT · VW</p>
-          <h1>Let's turn your idea into <em>work.</em></h1>
-          <p>Give us the essentials below. Your project brief will be prepared for WhatsApp so you can send it directly to VITCH WORKS.</p>
-          <div class="project-points"><span>01</span> Tell us what you need.<span>02</span> Choose your service.<span>03</span> Send the brief.</div>
-        </div>
-
-        <form id="project-form" class="project-form">
-          <label>Full name<input name="name" type="text" placeholder="Your name" required></label>
-          <label>WhatsApp number<input name="phone" type="tel" placeholder="e.g. +234 800 000 0000" required></label>
-          <label>What do you need?<select name="service" required><option value="">Select a service</option><option>Branding & Identity</option><option>Graphic Design</option><option>Social Media Design</option><option>Video & Motion</option><option>Web & Digital</option><option>AI Creative</option><option>Photo Editing</option><option>Scripts & Concepts</option><option>Custom Project</option></select></label>
-          <label>Budget range<select name="budget"><option value="Not sure yet">Not sure yet</option><option>Under ₦5,000</option><option>₦5,000 – ₦15,000</option><option>₦15,000 – ₦35,000</option><option>₦35,000+</option></select></label>
-          <label>Project details<textarea name="details" rows="6" placeholder="Tell us about the project, deadline, style, quantity, or anything else we should know." required></textarea></label>
-          <button class="btn btn-primary" type="submit">Send Project Brief on WhatsApp ↗</button>
-          <p class="form-note">You will review the message before sending it.</p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer><div class="container footer-grid"><div><a class="wordmark" href="index.html">VITCH <span>WORKS</span></a><p>Creativity · Digital · Motion · AI</p></div><div class="footer-links"><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="index.html#pricing">Pricing</a></div></div><div class="container copyright">© 2026 VITCH WORKS. All Rights Reserved.</div></footer>
-  <script>
-    const toggle=document.getElementById('menu-toggle'),nav=document.getElementById('navbar');
-    if(toggle&&nav) toggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));});
-    document.getElementById('project-form').addEventListener('submit',function(e){
-      e.preventDefault();
-      const data=new FormData(this);
-      const msg=`Hello VITCH WORKS 👋%0A%0AI'd like to start a project.%0A%0AName: ${data.get('name')}%0AWhatsApp: ${data.get('phone')}%0AService: ${data.get('service')}%0ABudget: ${data.get('budget')}%0A%0AProject details:%0A${data.get('details')}`;
-      window.open(`https://wa.me/2348083336746?text=${encodeURIComponent(msg)}`,'_blank','noopener');
-    });
-  </script>
-</body>
-</html>
+<header class="site-header"><div class="container nav-wrap"><a class="wordmark" href="index.html">VITCH<span>WORKS</span><i>.</i></a><nav class="nav-menu" style="display:flex"><a href="dashboard.html">Client portal</a><a href="index.html">Website</a></nav></div></header>
+<main class="project-shell"><div class="project-layout">
+<section class="project-intro"><p class="eyebrow">START A PROJECT · VW</p><h1>Let's turn your idea into <em>work.</em></h1><p>Share a few details about what you need. Your brief will be saved to your VITCH WORKS client account so our team can review it and follow up.</p><div class="project-points"><div><span>01</span> Tell us what you need.</div><div><span>02</span> Share your budget and timing.</div><div><span>03</span> Submit and track your request.</div></div></section>
+<form id="project-form" class="project-form">
+<div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+<label>Full name<input id="client-name" name="name" type="text" autocomplete="name" required placeholder="Your full name"></label>
+<div class="form-row"><label>WhatsApp number<input id="client-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+234…"></label><label>Service<select name="service" required><option value="">Choose a service</option><option>Branding & Identity</option><option>Graphic Design</option><option>Social Media Design</option><option>Video & Motion</option><option>Web & Digital</option><option>AI Creative</option><option>Photo Editing</option><option>Scripts & Concepts</option><option>Custom Project</option></select></label></div>
+<label>Project title<input name="title" type="text" maxlength="120" required placeholder="Give your project a short name"></label>
+<div class="form-row"><label>Budget range<select name="budget"><option value="">Not sure yet</option><option value="5000">Under ₦5,000</option><option value="10000">₦5,000 – ₦15,000</option><option value="25000">₦15,000 – ₦35,000</option><option value="35000">₦35,000+</option></select></label><label>Preferred deadline<input name="deadline" type="date" id="deadline"></label></div>
+<label>Project details<textarea name="details" maxlength="5000" required placeholder="Tell us about the project, your audience, preferred style, deliverables and anything else we should know."></textarea></label>
+<button class="btn btn-primary" id="submit-project" type="submit">Submit project brief ↗</button>
+<p class="form-note">Your brief is submitted privately to VITCH WORKS. We will review it and contact you about the next step. Submitting a brief does not confirm a booking or payment.</p>
+</form></div></main>
+<script type="module">
+import { supabase } from './vgs-auth.js?v=15';
+const form=document.getElementById('project-form');
+const status=document.getElementById('form-status');
+const submit=document.getElementById('submit-project');
+let signedInUser=null;
+function showStatus(message,kind=''){status.textContent=message;status.className='form-status show '+kind;}
+async function init(){
+ const {data:{user},error}=await supabase.auth.getUser();
+ if(error||!user){location.href='auth.html?redirect=start-project.html';return;}
+ signedInUser=user;
+ const {data:profile}=await supabase.from('profiles').select('full_name,phone').eq('id',user.id).maybeSingle();
+ document.getElementById('client-name').value=profile?.full_name||user.user_metadata?.full_name||'';
+ document.getElementById('client-phone').value=profile?.phone||'';
+}
+const deadline=document.getElementById('deadline');
+deadline.min=new Date().toISOString().slice(0,10);
+form.addEventListener('submit',async event=>{
+ event.preventDefault();
+ if(!signedInUser){showStatus('Your session has expired. Please sign in again.','bad');return;}
+ const data=new FormData(form);
+ const name=String(data.get('name')||'').trim();
+ const phone=String(data.get('phone')||'').trim();
+ const service=String(data.get('service')||'').trim();
+ const title=String(data.get('title')||'').trim();
+ const details=String(data.get('details')||'').trim();
+ const budgetRaw=String(data.get('budget')||'');
+ const deadlineValue=String(data.get('deadline')||'');
+ if(!name||!phone||!service||!title||!details){showStatus('Please complete all required fields.','bad');return;}
+ if(deadlineValue&&deadlineValue<new Date().toISOString().slice(0,10)){showStatus('Please choose a future deadline.','bad');return;}
+ submit.disabled=true;submit.textContent='Submitting your brief…';showStatus('Saving your project brief securely…');
+ try{
+  const {error:profileError}=await supabase.from('profiles').update({full_name:name,phone}).eq('id',signedInUser.id);
+  if(profileError)throw new Error('Your profile could not be updated: '+profileError.message);
+  const {error}=await supabase.from('bookings').insert({client_id:signedInUser.id,service,project_title:title,description:details,budget:budgetRaw?Number(budgetRaw):null,currency:'NGN',deadline:deadlineValue||null,status:'pending'});
+  if(error)throw error;
+  form.reset();document.getElementById('client-name').value=name;document.getElementById('client-phone').value=phone;
+  showStatus('Your project brief has been submitted! The VITCH WORKS team can now review it. You can check its status from your client portal.','good');
+  submit.textContent='Brief submitted ✓';
+  const go=document.createElement('a');go.href='dashboard.html#bookings';go.className='btn btn-primary';go.textContent='View my client portal →';form.insertBefore(go,form.querySelector('.form-note'));
+ }catch(error){console.error('Project submission failed',error);showStatus(error?.message||'We could not submit your brief. Please try again.','bad');submit.disabled=false;submit.textContent='Submit project brief ↗';}
+});
+init();
+</script>
+</body></html>
