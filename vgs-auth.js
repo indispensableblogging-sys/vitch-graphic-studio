@@ -99,7 +99,8 @@ function showResetMode(){
 
 function getRedirectTarget(){
   const value=new URLSearchParams(window.location.search).get("redirect")||"dashboard.html";
-  return value.endsWith("admin.html")?"admin.html":"dashboard.html";
+  const allowed=["dashboard.html","start-project.html","project-workspace.html"];
+  return allowed.includes(value) ? value : "dashboard.html";
 }
 
 async function initAuthPage(){
@@ -111,7 +112,7 @@ async function initAuthPage(){
   if(window.location.hash.includes("type=recovery")||new URLSearchParams(window.location.search).get("type")==="recovery")showResetMode();
   showAuthMessage("Secure portal ready. You can sign in or create an account.",true);
   if(loginForm)loginForm.addEventListener("submit",async e=>{e.preventDefault();const email=document.getElementById("login-email").value.trim(),password=document.getElementById("login-password").value;showAuthMessage("Signing you in...");try{const {error}=await supabase.auth.signInWithPassword({email,password});if(error){showAuthMessage(explainAuthError(error));return;}const admin=await isAdmin();showAuthMessage("Login successful. Opening your dashboard...",true);window.location.href=admin?"admin.html":redirect;}catch(error){showAuthMessage(explainAuthError(error));}});
-  if(signupForm)signupForm.addEventListener("submit",async e=>{e.preventDefault();const fullName=document.getElementById("signup-name").value.trim(),email=document.getElementById("signup-email").value.trim(),password=document.getElementById("signup-password").value;showAuthMessage("Creating your account...");try{const {data,error}=await supabase.auth.signUp({email,password,options:{data:{full_name:fullName,email_redirect_to:`${SITE_URL}/auth.html`}}});if(error){showAuthMessage(explainAuthError(error));return;}if(data.session){showAuthMessage("Account created. Opening your dashboard...",true);window.location.href="dashboard.html";}else showAuthMessage("Account created. Check your email to confirm your account, then sign in.",true);}catch(error){showAuthMessage(explainAuthError(error));}});
+  if(signupForm)signupForm.addEventListener("submit",async e=>{e.preventDefault();const fullName=document.getElementById("signup-name").value.trim(),email=document.getElementById("signup-email").value.trim(),password=document.getElementById("signup-password").value;showAuthMessage("Creating your account...");try{const {data,error}=await supabase.auth.signUp({email,password,options:{data:{full_name:fullName,email_redirect_to:`${SITE_URL}/auth.html`}}});if(error){showAuthMessage(explainAuthError(error));return;}if(data.session){showAuthMessage("Account created. Opening your dashboard...",true);window.location.href=redirect;}else showAuthMessage("Account created. Check your email to confirm your account, then sign in.",true);}catch(error){showAuthMessage(explainAuthError(error));}});
   if(resetForm)resetForm.addEventListener("submit",async e=>{e.preventDefault();const password=document.getElementById("reset-password").value,confirm=document.getElementById("reset-password-confirm").value;if(password!==confirm){showAuthMessage("The two passwords do not match.");return;}showAuthMessage("Updating your password...");try{const {error}=await supabase.auth.updateUser({password});if(error){showAuthMessage(explainAuthError(error));return;}showAuthMessage("Password updated successfully. You can now sign in.",true);setTimeout(()=>{window.location.href="auth.html";},1200);}catch(error){showAuthMessage(explainAuthError(error));}});
 }
 window.vgsSupabase=supabase;
